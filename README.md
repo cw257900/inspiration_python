@@ -10,12 +10,12 @@ To set up the project, follow these steps:
 
 1. Initialize a Git repository:
    
-2. Recommendation Based on  Needs:
-    For Text Extraction: Use PDFMiner.six or PyMuPDF.
-    For Tables: Camelot and Tabula-py are specialized for tables.
-    For Images: PyMuPDF and pdfplumber are better suited for image extraction.
-    For Comprehensive Parsing (text, images, and tables): pdfplumber or PyMuPDF is the most versatile option.
-    For marker:in ThinkPython: make PDF LLM ready
+2. Recommendation Based on  Needs: <br>
+    For Text Extraction: Use PDFMiner.six or PyMuPDF.<br>
+    For Tables: Camelot and Tabula-py are specialized for tables.<br>
+    For Images: PyMuPDF and pdfplumber are better suited for image extraction.<br>
+    For Comprehensive Parsing (text, images, and tables): pdfplumber or PyMuPDF is the most versatile option. <br>
+    For marker:in ThinkPython: make PDF LLM ready <br>
     [Tool Evalution Summary](https://docs.google.com/spreadsheets/d/12IhxHZbYF71dPl32PQpF_6pg9e9S8f9W4sTHt-B0KTg/edit?pli=1&gid=0#gid=0)
 
 
