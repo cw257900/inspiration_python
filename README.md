@@ -8,7 +8,7 @@ This is a project to demonstrate Python capabilities and inspire coding with Pyt
 
 To set up the project, follow these steps:
 
-1. Initialize a Git repository:
+1. Initialize a Git repository
    
 2. Recommendation Based on  Needs: <br>
     For Text Extraction: Use PDFMiner.six or PyMuPDF.<br>
@@ -19,4 +19,3 @@ To set up the project, follow these steps:
     [Tool Evalution Summary](https://docs.google.com/spreadsheets/d/12IhxHZbYF71dPl32PQpF_6pg9e9S8f9W4sTHt-B0KTg/edit?pli=1&gid=0#gid=0)
 
 
-3. pip install pdfminer.six
