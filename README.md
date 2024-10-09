@@ -15,7 +15,7 @@ To set up the project, follow these steps:
     For Tables: Camelot and Tabula-py are specialized for tables.<br>
     For Images: PyMuPDF and pdfplumber are better suited for image extraction.<br>
     For Comprehensive Parsing (text, images, and tables): pdfplumber or PyMuPDF is the most versatile option. <br>
-    For marker:in ThinkPython: make PDF LLM ready <br>
+    For marker: discussioned in ThinkPython about how to make PDF LLM ready <br>
     [Tool Evalution Summary](https://docs.google.com/spreadsheets/d/12IhxHZbYF71dPl32PQpF_6pg9e9S8f9W4sTHt-B0KTg/edit?pli=1&gid=0#gid=0)
 
 3. [Training Video ](https://learn.deeplearning.ai/courses/preprocessing-unstructured-data-for-llm-applications/lesson/5/preprocessing-pdfs-and-images) : preprocessing unstructured data (pdf and images) for llm applications 
