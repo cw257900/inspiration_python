@@ -1,4 +1,5 @@
 #DOC: https://medium.com/@pymupdf/rag-llm-and-pdf-enhanced-text-extraction-5c5194c3885c
+#Comparison: https://docs.google.com/spreadsheets/d/12IhxHZbYF71dPl32PQpF_6pg9e9S8f9W4sTHt-B0KTg/edit?pli=1&gid=0#gid=0
 #video: https://learn.deeplearning.ai/courses/preprocessing-unstructured-data-for-llm-applications/lesson/5/preprocessing-pdfs-and-images
 
 
