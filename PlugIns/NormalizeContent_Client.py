@@ -6,7 +6,7 @@ from IPython.display import JSON
 import json
 
 from unstructured_client import UnstructuredClient
-from unstructured_client.models import shared
+from unstructured_client.models import shared, operations
 from unstructured_client.models.errors import SDKError
 
 from unstructured.partition.html import partition_html
@@ -66,16 +66,17 @@ class NormalizeContent:
                 )
 
             # Prepare the request
-            req = shared.PartitionParameters(
-                files=files,
-                strategy='hi_res',
-                pdf_infer_table_structure=True,
-                languages=["eng"],
+            req = operations.PartitionRequest(
+                partition_parameters=shared.PartitionParameters(
+                    files=files,
+                    strategy='hi_res',
+                    pdf_infer_table_structure=True,
+                    languages=["eng"],
+                )
             )
 
             # Send the partition request and print the first 3 elements
-            print(dir(s))
-            resp = s.general.partition(req)
+            resp = s.general.partition(request=req)
             print(json.dumps(resp.elements[:3], indent=2))
 
         except SDKError as e:
@@ -88,6 +89,8 @@ def main():
 
     processor = NormalizeContent( filename = "example_files/el_nino.html" )   
     processor.json_outof_html()
+    processor = NormalizeContent( filename = "data/10-page-sample.pdf" )  
+    processor.json_outof_pdf()
     
 
 # Entry point for the script
