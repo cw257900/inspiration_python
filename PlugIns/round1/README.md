@@ -15,7 +15,7 @@ To set up the project, follow these steps:
     
 4. Round 1: <br>
     &ensp;* **Goal**: to validata PyMuPDF <br> 
-    &ensp;* **Action**: leverage PyMuPDF to parse pdf -> json; then revert back to pdf <br>
+    &ensp;* **Action**: leverage PyMuPDF to parse pdf -> json; -> revert back to pdf <br>
     &ensp;* **Result**: terrible. <br> 
         &emsp;&emsp;- **Input**:  data/input_pdf <br>
         &emsp;&emsp;- **Output**: data/output_json <br>
