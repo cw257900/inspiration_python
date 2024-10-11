@@ -10,6 +10,5 @@ To set up the project, follow these steps:
 
 1. Initialize a Git repository
 
-
-
+2. Builder Docker file for parsing files
 
