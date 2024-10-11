@@ -13,10 +13,10 @@ To set up the project, follow these steps:
 
 3. Use [PyMuPDF](https://pypi.org/project/PyMuPDF/)
     
-4. Round 1: 
-        &ensp;* Goal: to validata PyMuPDF <br> 
-        &ensp;* Action: leverage PyMuPDF to parse pdf -> json; then revert back to pdf <br>
-        &ensp;* Result: terrible. <br> 
-                &emsp;- Input Data:  data/input_pdf <br>
-                &emsp;- Output Data: data/output_json <br>
-                &emsp;- Validation:  data/revert_pdf_pymupdf <br>
+4. Round 1: <br>
+    &ensp;* Goal: to validata PyMuPDF <br> 
+    &ensp;* Action: leverage PyMuPDF to parse pdf -> json; then revert back to pdf <br>
+    &ensp;* Result: terrible. <br> 
+        &emsp;&emsp;- Input Data:  data/input_pdf <br>
+        &emsp;&emsp;- Output Data: data/output_json <br>
+        &emsp;&emsp;- Validation:  data/revert_pdf_pymupdf <br>
