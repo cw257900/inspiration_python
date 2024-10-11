@@ -11,5 +11,7 @@ To set up the project, follow these steps:
 1. Initialize a Git repository
    
 2. [Open Source Library Analysis](https://chunping.atlassian.net/wiki/spaces/Inspiratio/pages/65709/Normalize+Content+from+Unstructured+to+Structured)
+
+3. Use [PyMuPDF](https://pypi.org/project/PyMuPDF/)
     
 
