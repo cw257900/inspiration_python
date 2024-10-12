@@ -4,7 +4,7 @@ from generate_embeddings import generate_embeddings
 import upload_embeddings
 import pinecone
 from dotenv import load_dotenv
-import utils._setup as _setup
+import setup
 from query_system import query_vector_db
 
 # Load environment variables from .env
@@ -63,7 +63,7 @@ def query_pdfs(query_text):
         raise ValueError("No embeddings were generated for the query text. Please check your embedding generation function.")
 
     # Initialize Pinecone and get the index
-    index = _setup.initialize_pinecone()
+    index = setup.initialize_pinecone()
 
     # Query the index with the generated embedding
     result = query_vector_db(query_embedding[0]['values'], index)  # Assuming embeddings have 'values' key

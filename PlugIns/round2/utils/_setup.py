@@ -62,7 +62,6 @@ def add_vectors_to_index(index, vectors):
 
 # Example usage
 if __name__ == "__main__":
-    
     # Initialize the Pinecone index
     index = initialize_pinecone()
 

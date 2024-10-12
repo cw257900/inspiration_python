@@ -34,6 +34,30 @@ reference_texts = [
 # Pre-compute embeddings for reference texts
 reference_embeddings = text_model.encode(reference_texts)
 
+# Function to query Pinecone and convert vector to text
+def convert_vector_to_text(vector_id, namespace=None, top_k=3):
+    try:
+        # Query Pinecone with the vector ID
+        response = index.query(
+            namespace=namespace,  # Namespace (optional)
+            id=vector_id,  # Vector ID to query
+            top_k=top_k,  # Top K results
+            include_values=True  # Include vector values in the result
+        )
+
+        # Extract the vector from the response
+        matches = response['matches']
+        if not matches:
+            return "No matches found."
+
+        # Convert the top match vector to a text answer
+        best_match_vector = matches[0]['values']
+        text_answer = vector_to_text(best_match_vector)
+
+        return text_answer
+
+    except Exception as e:
+        return f"Error querying Pinecone: {e}"
 
 
 # Function to decode vector into a text answer by finding the nearest text match
@@ -57,10 +81,10 @@ def main():
     user_input = input("prompt: ")
 
      # Simulated vector (replace with actual vector from Pinecone)
-    prompt_vector = text_model.encode(user_input)
+    example_vector = text_model.encode(user_input)
 
     # Decode the vector into the most similar text
-    decoded_text = vector_to_text(prompt_vector)
+    decoded_text = vector_to_text(example_vector)
     print(f"Decoded text: {decoded_text}")
 
 if __name__ == "__main__":
