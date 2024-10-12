@@ -10,5 +10,7 @@ To set up the project, follow these steps:
 
 1. Initialize a Git repository
 
-2. Builder Docker file for parsing files
+2. Used: pdfplumber, sentence_transformers, PIL for image, transformers for CLIPProcessor, CLIPModel, numpy 
+
+3. Add embeddings with text, table and image separately to pinecone 
 
