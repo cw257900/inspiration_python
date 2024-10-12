@@ -1,0 +1,4 @@
+Depending on the vehicle, the door  
+mirrors fold in/out automatically  
+when the vehicle is locked/unlocked  
+➥
