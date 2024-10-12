@@ -1,32 +1,14 @@
-Step-by-Step Plan
+# Inspiration Python
 
-    Install Required Libraries:
-        Pinecone (for vector database)
-        PDF parsing libraries like pdfplumber or PyMuPDF to extract text, tables, and images from PDFs.
-        transformers or any other embedding models (Hugging Face models, OpenAI API for embeddings).
-        PIL (for images).
+This is a project to demonstrate Python capabilities and inspire coding with Python.
+[Work log](https://quantumintelligencegroup-my.sharepoint.com/:x:/r/personal/connie_wang_qig_ai/_layouts/15/Doc.aspx?sourcedoc=%7B25F8FEDD-2CBA-4E91-AD2B-F38F9F6AAC3D%7D&file=Book.xlsx&action=editnew&mobileredirect=true&wdNewAndOpenCt=1728460518562&ct=1728460519023&wdOrigin=OFFICECOM-WEB.START.NEW&wdPreviousSessionSrc=HarmonyWeb&wdPreviousSession=be91cd6f-f521-4a36-8090-6e835fb730aa&cid=a1ec26a7-c8b3-4046-84ff-0f86b30af4cf)
 
 
-    pip install pinecone-client pdfplumber transformers Pillow
+## Project Setup
 
-    Parsing Files:
+To set up the project, follow these steps:
 
-        For PDFs, use pdfplumber or PyMuPDF to extract text, tables, and images.
-        For JSON, read the structure and extract data accordingly.
+1. Initialize a Git repository
 
-    Embedding the Parsed Data:
+2. Builder Docker file for parsing files
 
-        Use a text embedding model for text (e.g., OpenAI text-embedding-ada-002).
-        For images, use a vision model (e.g., CLIP from Hugging Face).
-        For tables, you can either convert them to text or use specialized table embedding models.
-
-    Saving Embeddings to Pinecone:
-
-        After generating embeddings for text, images, and tables, store them in Pinecone using their API.
-
-
-pip install pymupdf
-pip install pdfplumber
-pip install pinecone-client
-pip install python-dotenv
-pip install openai  
