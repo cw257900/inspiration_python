@@ -1,70 +1,74 @@
 import os
+import pinecone  # Correct Pinecone import
 from dotenv import load_dotenv
 from pinecone import Pinecone, ServerlessSpec
 
 # Load environment variables from .env
 load_dotenv()
 
-# Fetch PDF directory and Pinecone API key from environment variables
+# Fetch required environment variables
 pdf_directory = os.getenv("PDF_FILE_INPUT_DIR")
 pinecone_api_key = os.getenv("PINECONE_API_KEY")
 pinecone_index_name = os.getenv("PINECONE_INDEX_NAME")
 
-# Check if the environment variables were loaded correctly
+# Ensure all required environment variables are loaded
 if not pinecone_api_key or not pinecone_index_name or not pdf_directory:
-    raise ValueError("One or more required environment variables are missing: PINECONE_API_KEY, PINECONE_INDEX_NAME, or PDF_FILE_INPUT_DIR.")
+    raise ValueError("Missing environment variables: PINECONE_API_KEY, PINECONE_INDEX_NAME, or PDF_FILE_INPUT_DIR.")
 
-# Initialize Pinecone client using the correct API
 def initialize_pinecone():
+    """
+    Initializes Pinecone and connects to an existing index.
+    If the index does not exist, it creates it.
+    """
     try:
-        # Initialize Pinecone using the Pinecone class and API key
+        # Initialize Pinecone using the new API key structure
         pc = Pinecone(api_key=pinecone_api_key)
 
+
+        # Check if the index exists, and create it if it doesn't
         if pinecone_index_name not in pc.list_indexes():
-            # Create the index only if it doesn't already exist
             print(f"Creating Pinecone index: {pinecone_index_name}")
             pc.create_index(
                 name=pinecone_index_name, 
                 dimension=512,  # Adjust based on your embedding dimension
-                metric='cosine',
+                metric='cosine',  # Adjust the metric based on your needs
                 spec=ServerlessSpec(
-                    cloud='aws',
-                    region='us-east-1'  # Adjust region as needed
-                ),
-                
+                cloud='aws',
+                region='us-east-1'
+            )
             )
         else:
-            print(f"Index {pinecone_index_name} already exists, skipping creation.")
+            print(f"Index {pinecone_index_name} already exists. Connecting...")
 
+        # Connect to the index
+        index = pc.Index(pinecone_index_name)
+        print(f"Connected to Pinecone index: {pinecone_index_name}")
 
-        # Get the index host
-        index_description = pc.describe_index(pinecone_index_name)
-        if index_description is None:
-            raise ValueError(f"Index {pinecone_index_name} does not exist or was not properly created.")
-        
-        host = index_description['host']
-        
-        # Connect to the index using the host
-        index = pc.Index(pinecone_index_name, host=host)
-        
-        print(f"Pinecone Index Name: {index}")
-        print("Pinecone initialized and index connected successfully.")
         return index
-    
-    except Exception as e: 
+    except Exception as e:
         print(f"Error initializing Pinecone: {e}")
         return None
 
-# List all PDF files in the specified directory
-def list_pdfs(pdf_directory):
-    if not os.path.exists(pdf_directory):
-        raise FileNotFoundError(f"PDF directory {pdf_directory} does not exist.")
-    
-    return [f for f in os.listdir(pdf_directory) if f.endswith('.pdf')]
+def add_vectors_to_index(index, vectors):
+    """
+    Adds vectors to the given Pinecone index.
+    """
+    try:
+        # Upsert vectors into the index
+        index.upsert(vectors)
+        print("Vectors added successfully.")
+    except Exception as e:
+        print(f"Error adding vectors to index: {e}")
 
-# Example usage: print all PDFs
+# Example usage
 if __name__ == "__main__":
+    # Initialize the Pinecone index
     index = initialize_pinecone()
+
     if index:
-        pdf_files = list_pdfs(pdf_directory)
-        print("setup.py ** PDFs found:", pdf_files)
+        # Example vectors to be added (replace with your actual vectors)
+        example_vectors = [
+            ("vector_id_1", [0.1, 0.2, 0.3, 0.4, 0.5]),  # Vector format: (id, vector data)
+            ("vector_id_2", [0.2, 0.1, 0.5, 0.4, 0.3])
+        ]
+        add_vectors_to_index(index, example_vectors)

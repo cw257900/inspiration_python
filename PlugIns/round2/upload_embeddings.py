@@ -1,6 +1,7 @@
 import pinecone
+import setup
 
-def upload(embeddings, index, namespace="default"):
+def upload(embeddings, namespace="default"):
     """
     Uploads a list of embeddings to the specified Pinecone index.
 
@@ -10,6 +11,7 @@ def upload(embeddings, index, namespace="default"):
     index (pinecone.Index): The Pinecone index object to upload embeddings to.
     namespace (str): The namespace within the Pinecone index to upload to (default is "default").
     """
+    index = setup.initialize_pinecone()
 
     try:
         # Prepare the list of vectors for uploading
@@ -23,7 +25,7 @@ def upload(embeddings, index, namespace="default"):
 
         # Upload the vectors to Pinecone
         if vectors:
-            print(f"Uploading {len(vectors)} embeddings to Pinecone...")
+            print(f"upload_embeddings.py Uploading {len(vectors)} embeddings to Pinecone...")
             index.upsert(vectors=vectors, namespace=namespace)
             print("Upload successful.")
         else:

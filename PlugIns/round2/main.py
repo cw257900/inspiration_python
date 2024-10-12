@@ -18,24 +18,34 @@ def process_pdfs():
         raise ValueError("PDF_FILE_INPUT_DIR not set in environment variables.")
     
     pdf_files = os.listdir(pdf_directory)
+    print(f"main.py process those files in input folder   ...")
+    print(pdf_files)
+    print()
 
-    # Initialize the Pinecone index
-    index = setup.initialize_pinecone()
 
     for pdf_file in pdf_files:
-        pdf_path = os.path.join(pdf_directory, pdf_file)
-        print(f"Processing {pdf_file}...")
+        pdf_file = os.path.join(pdf_directory, pdf_file)
+
+        print("one file a time")
+        print(pdf_file)
+        print()
+
+        if '.DS_Store' in pdf_file:
+            return False
+        
 
         # Step 1: Extract content
-        content = main_single_file(pdf_path)
+        content = main_single_file(pdf_file)
 
         # Step 2: Generate embeddings
-        print (" process_pdfs *** step 2")
+        print ("main.py process_pdfs *** about to generate embedding ")
         print ()
         embeddings = generate_embeddings(content)
 
         # Step 3: Upload embeddings to Pinecone
-        upload_embeddings.upload(embeddings, index)
+        print ("main.py process_pdfs *** about to upload embedding ")
+        print ()
+        upload_embeddings.upload(embeddings)
 
     print("All PDFs processed and uploaded to Vector DB.")
 

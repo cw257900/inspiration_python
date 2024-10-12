@@ -32,7 +32,8 @@ def generate_embeddings(content):
             embeddings.append({'id': item.get('id', 'image_id'), 'values': embedding})
         else:
             print(f"Unknown item type: {item['type']}")
-
+    
+    print ("generate_embeddings.py finished generate embedding for all items in content text and image ...")
     return embeddings
 
 # Subfunction to generate text embeddings

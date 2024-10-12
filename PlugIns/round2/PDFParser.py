@@ -51,7 +51,8 @@ class PDFParser:
                 with open(text_file_path, 'w', encoding='utf-8') as text_file:
                     text_file.write(text)
 
-            print(f"Text from page {page_number + 1} saved to {VALIDATION_TMP_DIR}")
+            print(f"PDFParser.py {text_file}  {page_number + 1} saved to {VALIDATION_TMP_DIR}")
+            print()
 
        
             # Extract images
