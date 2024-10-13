@@ -1,14 +1,31 @@
-# Learn from pdf
 
 
 
 ## Introduction
 ------------
+an app to chat with private knowledge base build from pdfs <br>
+ask question in natural English, app provides relevant reponse based on content from the documents <br>
+the app can only respond to questions related to the loaded pdfs
 
 
 ## How It Works
 ------------
 
+The application follows these steps to provide responses to your questions:
+
+1. PDF Loading: The app reads multiple PDF documents and extracts their text content. <br>
+   &emsp;&emsp; &emsp; - load from local in this project;  <br>
+   &emsp;&emsp; &emsp; - later can build plugin to read from any sources such as S3, GCP, MongoDB ... <br>
+
+2. Text Chunking: The extracted text is divided into smaller chunks that can be processed effectively.<br>
+   &emsp;&emsp; &emsp;- PyPDF2 to read pdf; and langchain CharacterTextSplitter to split text to chunks <br>
+
+3. Language Model: The application utilizes a language model to generate vector representations (embeddings) of the text chunks.
+   &emsp;&emsp; &emsp; - weaviately's build in model  <br>
+
+4. Similarity Matching: When you ask a question, the app compares it with the text chunks and identifies the most semantically similar ones.<br>
+
+5. Response Generation: The selected chunks are passed to the language model, which generates a response based on the relevant content of the PDFs.<br>
 
 
 ## Dependencies and Installation
