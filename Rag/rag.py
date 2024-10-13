@@ -1,4 +1,12 @@
+
+import os
 import streamlit as st
+from dotenv import load_dotenv
+
+load_dotenv()
+
+API_KEY_OPENAI=os.getenv("API_KEY_OPENAI")
+API_TOKEN_HUGGENFACE=os.getenv("")
 
 def main():
     st.set_page_config(page_title="Chat with Connie", page_icon=":books:")
