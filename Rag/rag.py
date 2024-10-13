@@ -50,7 +50,7 @@ def get_text_chunks(text):
     chunks = text_splitter.split_text(text)
     return chunks
 
-def define_schema():
+def get_data_model():
      # Define the schema manually for v4 (adjust if necessary)
     class_obj = {
         "class": WEAVIATE_CLASS_NAME,
@@ -70,7 +70,7 @@ def define_schema():
     return class_obj  
 
 # Function to load text chunks into Weaviate
-def load_pdf_to_weaviate_db(pdf_file_path):
+def load_pdf_to_vector_db(pdf_file_path):
     try:
         # Extract text from the PDF file
         text = get_pdf_text(pdf_file_path)
@@ -80,7 +80,7 @@ def load_pdf_to_weaviate_db(pdf_file_path):
    
         
         # Define the schema manually for v4 (adjust if necessary)
-        class_obj = define_schema()
+        class_obj = get_data_model()
         
         # Iterate through text chunks and upload them to Weaviate
         for idx, chunk in enumerate(text_chunks):
@@ -107,14 +107,15 @@ def load_pdf_to_weaviate_db(pdf_file_path):
     
     finally:
 
+        print(f"Finished : {pdf_file_path} -> {WEAVIATE_CLASS_NAME}")
         client.close()  # Close the Weaviate client properly
 
 
 
 
 def main():
-    pdf_file_path = "data/business_law.pdf"  # Specify the path to your PDF file
-    load_pdf_to_weaviate_db(pdf_file_path)
+    pdf_file_path = "data/constitution.pdf"  # Specify the path to your PDF file
+    load_pdf_to_vector_db(pdf_file_path)
   
 
 if __name__ == "__main__":
