@@ -26,8 +26,6 @@ client = weaviate.connect_to_weaviate_cloud(
     auth_credentials=Auth.api_key(WEAVIATE_API_KEY),
 )
 
-
-
 # Function to read PDF and extract text from all pages
 def get_pdf_text(pdf_file_path):
     with open(pdf_file_path, 'rb') as file:
