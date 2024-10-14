@@ -31,6 +31,7 @@ def get_query_object_by_keyword(client, keyword):
 
     return result
 
+
 def get_hybridsearch_object_by_keyword(client, text):
 
     # Replace {uuid} in the query with the actual UUID value
@@ -47,10 +48,13 @@ def main():
 
     query_rlt = get_query_object_by_keyword(client, 'New Jersey')    
 
-    query_rlt = get_hybridsearch_object_by_keyword(client, 'What constituation say about carrying guns?')    
-    
-    # Pretty print the result
-    print(json.dumps(query_rlt, indent=2))
+
+    # Prompt the user to input a question for hybrid search
+    question = input("Enter a question for hybrid search: ")
+    hybrid_rlt = get_hybridsearch_object_by_keyword(client, question)
+
+    print("\nResults for hybrid search:")
+    print(json.dumps(hybrid_rlt, indent=2))
 
 
 # Call the main function
