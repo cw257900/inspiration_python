@@ -6,13 +6,16 @@ import json
 from weaviate.util import generate_uuid5
 from tqdm import tqdm
 import os
-import vectordb
+import sys
+sys.path.append("../../")
+import vectordb_init
+
 
 # Instantiate your client (not shown). e.g.:
 # client = weaviate.connect_to_weaviate_cloud(...) or
 # client = weaviate.connect_to_local(...)
 
-client = vectordb.init()
+client = vectordb_init.init()
 
 # Get the collection
 movies = client.schema.get("Movie")
