@@ -14,7 +14,7 @@ WEAVIATE_URL = os.getenv("WEAVIATE_URL")
 
 # Optional: Add class names to environment variables if needed
 WEAVIATE_CLASS_NAME_MOVIE = os.getenv("WEAVIATE_CLASS_NAME_MOVIE", "Movie")
-WEAVIATE_CLASS_NAME_PDF = os.getenv("WEAVIATE_CLASS_NAME_PDF", "PDF_COLLECTIONS")
+WEAVIATE_CLASS_NAME_PDF = os.getenv("WEAVIATE_CLASS_NAME_PDF", "PDF_Library")
 
 # Test pdf_processor function
 pdf_processor.get_text_chunks("This is input test")

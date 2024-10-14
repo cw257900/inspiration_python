@@ -71,7 +71,7 @@ def init(schemaClassName):
     # Initialize the Weaviate client
     client = weaviate.Client(WEAVIATE_URL, additional_headers=headers)
     
-    # Call init_schema for both "Movie" and "PDF_COLLECTIONS"
+    # Call init_schema for any classes (database)
     client = init_schema(schemaClassName=schemaClassName, client=client)
    
 
@@ -81,4 +81,4 @@ def init(schemaClassName):
 
 
 # Initialize the client and create both classes
-#client = init("PDF_COLLECTIONS")
+#client = init("PDF_Library")
