@@ -2,18 +2,26 @@
 
 # Define the GraphQL queries as static variables (Python strings)
 
-gql_getAllObjects = """
+
+gql_hybridsearch_withLimits =  """
 {
     Get {
-        PDF_COLLECTIONS {
+        PDF_COLLECTIONS(
+            hybrid: {
+                query: "{text}",
+                alpha: 0.75
+            },
+            limit: {limit} 
+        ) {
             pdf_name
             pdf_content
             pdf_chunk_id
             _additional {
-                id
+                score
             }
         }
     }
+
 }
 """
 
@@ -22,7 +30,7 @@ gql_hybridSearchByText = """
     Get {
         PDF_COLLECTIONS(
             hybrid: {
-                query: "does constitution talked about right of speech",
+                query: "{text}",
                 alpha: 0.75
             }
             ) {
@@ -65,6 +73,21 @@ gql_queryObjectsByKeyword = """
             operator: Like,
             valueString: "{keyword}"
         }) {
+            pdf_name
+            pdf_content
+            pdf_chunk_id
+            _additional {
+                id
+            }
+        }
+    }
+}
+"""
+
+gql_getAllObjects = """
+{
+    Get {
+        PDF_COLLECTIONS {
             pdf_name
             pdf_content
             pdf_chunk_id
