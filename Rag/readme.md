@@ -7,6 +7,8 @@ an app to chat with private knowledge base build from pdfs <br>
 ask question in natural English, app provides relevant reponse based on content from the documents <br>
 the app can only respond to questions related to the loaded pdfs
 
+[RAG Reading from Medium](https://medium.com/@florian_algo/list/2334780a5667)
+
 
 ## How It Works
 ------------
@@ -43,6 +45,7 @@ The application follows these steps to provide responses to your questions:
    - Vector Embeddings: The "vectorizer": "text2vec-openai" setting is already in place, so text properties will automatically generate vector embeddings using OpenAI’s embedding model.
 
    [Weaviate Tutorials](https://weaviate.io/developers/academy/py/zero_to_mvp) <br>
+   
 
 ## Usage
 -----

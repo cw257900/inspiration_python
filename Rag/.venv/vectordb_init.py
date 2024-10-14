@@ -13,7 +13,7 @@ WEAVIATE_URL = os.getenv("WEAVIATE_URL")
 
 # Optional: Add class names to environment variables if needed
 WEAVIATE_CLASS_NAME_MOVIE = os.getenv("WEAVIATE_CLASS_NAME_MOVIE", "Movie")
-WEAVIATE_CLASS_NAME_PDF = os.getenv("WEAVIATE_CLASS_NAME_PDF", "PDF_COLLECTIONS")
+WEAVIATE_CLASS_NAME_PDF = os.getenv("WEAVIATE_CLASS_NAME_PDF", "PDF_Library")
 
 headers = {
     "X-OpenAI-Api-Key": OPENAI_API_KEY
@@ -39,7 +39,7 @@ def init_schema(schemaClassName, client):
                     {"name": "release_date", "dataType": ["date"], "indexInverted": True},
                     {"name": "tmdb_id", "dataType": ["int"], "indexInverted": True}
                 ]
-            elif schemaClassName == "PDF_COLLECTIONS":
+            elif schemaClassName == "PDF_Library":
                 properties = [
                     {"name": "pdf_name", "dataType": ["string"], "indexInverted": True},
                     {"name": "pdf_content", "dataType": ["text"], "indexInverted": True},
@@ -67,17 +67,18 @@ def init_schema(schemaClassName, client):
         return client
 
 
-def init():
+def init(schemaClassName):
     # Initialize the Weaviate client
     client = weaviate.Client(WEAVIATE_URL, additional_headers=headers)
     
-    # Call init_schema for both "Movie" and "PDF_COLLECTIONS"
-    client = init_schema(schemaClassName=WEAVIATE_CLASS_NAME_MOVIE, client=client)
-    client = init_schema(schemaClassName=WEAVIATE_CLASS_NAME_PDF, client=client)
+    # Call init_schema for any classes (database)
+    client = init_schema(schemaClassName=schemaClassName, client=client)
+   
 
     # Return the client object
     return client
 
 
+
 # Initialize the client and create both classes
-client = init()
+#client = init("PDF_Library")
