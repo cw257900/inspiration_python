@@ -17,7 +17,7 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 WEAVIATE_API_KEY = os.getenv("WEAVIATE_API_KEY")  # Weaviate API key
 WEAVIATE_URL = os.getenv("WEAVIATE_URL")
 WEAVIATE_CLASS_NAME = os.getenv("WEAVIATE_CLASS_NAME")
-WEAVIAtE_CLASS_DESCRIPTION = os.getenv("WEAVIAtE_CLASS_DESCRIPTION")
+WEAVIATE_CLASS_DESCRIPTION = os.getenv("WEAVIAtE_CLASS_DESCRIPTION")
 
 
 # Initialize Weaviate client with API key authentication (v4)
@@ -54,7 +54,7 @@ def get_data_model():
      # Define the schema manually for v4 (adjust if necessary)
     class_obj = {
         "class": WEAVIATE_CLASS_NAME,
-        "description": WEAVIAtE_CLASS_DESCRIPTION,
+        "description": WEAVIATE_CLASS_DESCRIPTION,
         "properties": [{
             "name": "content",
             "dataType": ["text"]

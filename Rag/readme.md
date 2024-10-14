@@ -38,6 +38,9 @@ The application follows these steps to provide responses to your questions:
    Weaviate is designed for building applications that require more than just vector search, offering extensive extensibility via plugins. <br>
    Self-Hosted: Weaviate is open-source, so you can self-host it without paying for licenses. However, the cost of managing infrastructure (servers, storage, etc.) will depend on your setup. <br>
    Managed Service: Weaviate Cloud is a managed service where you pay based on usage (compute, storage, queries), but the pricing can vary depending on your deployment size. <br>
+   <br>
+   - indexInverted: true: This is added to all properties to explicitly indicate that they are filterable (indexed). This is particularly useful when performing searches or queries based on property values (e.g., finding all movies with a certain vote_average). <br>
+   - Vector Embeddings: The "vectorizer": "text2vec-openai" setting is already in place, so text properties will automatically generate vector embeddings using OpenAI’s embedding model.
 
    [Weaviate Tutorials](https://weaviate.io/developers/academy/py/zero_to_mvp) <br>
 

@@ -1,10 +1,13 @@
 import weaviate
 import os
-import vectordb  # Assuming this is a module where init() is defined
 import json
+import sys
+sys.path.append("../../")
+import vectordb_init  # Assuming this is a module where init() is defined
+
 
 # Initialize your client (assuming it's locally hosted or cloud, depending on your use case)
-client = vectordb.init()  # Initialize the client using your `vectordb` module
+client = vectordb_init.init()  # Initialize the client using your `vectordb_init` module
 
 def get_all_movies(client):
     """
