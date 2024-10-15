@@ -23,9 +23,9 @@ The application follows these steps to provide responses to your questions:
    &emsp;&emsp; &emsp;- PyPDF2 to read pdf; and langchain CharacterTextSplitter to split text to chunks <br>
 
 3. Language Model: The application utilizes a language model to generate vector representations (embeddings) of the text chunks.
-   &emsp;&emsp; &emsp; - weaviately's build in model  <br>
+   &emsp;&emsp; &emsp; - weaviately's build in model : text2vec_openai: model="text-embedding-3-large",  dimensions=1024  <br>
 
-4. Similarity Matching: When you ask a question, the app compares it with the text chunks and identifies the most semantically similar ones.<br>
+4. Similarity Matching: cosine When you ask a question, the app compares it with the text chunks and identifies the most semantically similar ones.<br>
 
 5. Response Generation: The selected chunks are passed to the language model, which generates a response based on the relevant content of the PDFs.<br>
 
