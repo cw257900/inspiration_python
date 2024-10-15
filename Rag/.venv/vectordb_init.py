@@ -11,9 +11,6 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 WEAVIATE_API_KEY = os.getenv("WEAVIATE_API_KEY")  # Weaviate API key
 WEAVIATE_URL = os.getenv("WEAVIATE_URL")
 
-# Optional: Add class names to environment variables if needed
-WEAVIATE_CLASS_NAME_MOVIE = os.getenv("WEAVIATE_CLASS_NAME_MOVIE", "Movie")
-WEAVIATE_CLASS_NAME_PDF = os.getenv("WEAVIATE_CLASS_NAME_PDF", "PDF_Library")
 
 headers = {
     "X-OpenAI-Api-Key": OPENAI_API_KEY
@@ -39,7 +36,7 @@ def init_schema(schemaClassName, client):
                     {"name": "release_date", "dataType": ["date"], "indexInverted": True},
                     {"name": "tmdb_id", "dataType": ["int"], "indexInverted": True}
                 ]
-            elif schemaClassName == "PDF_Library":
+            elif schemaClassName == "PDF_COLLECTIONS":
                 properties = [
                     {"name": "pdf_name", "dataType": ["string"], "indexInverted": True},
                     {"name": "pdf_content", "dataType": ["text"], "indexInverted": True},

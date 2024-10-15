@@ -19,13 +19,14 @@ load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 WEAVIATE_API_KEY = os.getenv("WEAVIATE_API_KEY")  # Weaviate API key
 WEAVIATE_URL = os.getenv("WEAVIATE_URL")
-class_name = os.getenv("WEAVIATE_CLASS_NAME_PDF", "PDF_COLLECTIONS")
-pdf_file_path = os.getenv("LOCAL_FILE_INPUT_PATH")
+class_name = os.getenv("WEAVIATE_CLASS_NAME_PDF")
+#pdf_file_path = os.getenv("LOCAL_FILE_INPUT_PATH")
+pdf_file_path="/Users/Connie/Desktop/connie/inspiration_python/Rag/.venv/use_cases/pdfs/data/all-number-table.pdf"
 
 
 def vectordb_verify_data(client):
 
-    collection_objects = client.data_object.get(class_name=class_name, limit=10)  # Adjust limit as needed
+    collection_objects = client.data_object.get(class_name=class_name, limit=5)  # Adjust limit as needed
     for obj in collection_objects['objects']:
         print(f"Object ID: {obj['id']}, Data: {obj['properties']}")
         
@@ -33,6 +34,8 @@ def vectordb_verify_data(client):
         for prop, value in obj['properties'].items():
             print(f"Property: {prop}, Value: {value}")
 
+
+    print ("Finished vectordb_verify_data() print out 5 records")
 
 
 # Function to load text chunks into Weaviate
@@ -45,6 +48,7 @@ def vectordb_upload_pdf():
         # Process PDF and upload chunks to Weaviate
         text_chunks = pdf_processor.get_text_chunks(pdf_file_path)
        
+       
         for idx, chunk in enumerate(text_chunks):
             # Prepare the object to upload
             data_object = {
@@ -56,6 +60,9 @@ def vectordb_upload_pdf():
             client.data_object.create(data_object, class_name)
 
         vectordb_verify_data(client)
+
+        print("Finished vectordb_upload_pdf()")
+        print (pdf_file_path)
 
 
     except Exception as e:
