@@ -25,4 +25,5 @@ services:
       CLUSTER_HOSTNAME: 'node1'
       volumes: ./weaviate_data:/var/lib/weaviate  # Bind mount local storage
 
+
 ...
