@@ -1,4 +1,4 @@
 __pycache__/
 .env
-Rag/.venv/docker-compose.yml
+RAG/.venv/docker-compose.yml
 .DS_Store
