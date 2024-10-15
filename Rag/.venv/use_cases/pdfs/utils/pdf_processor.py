@@ -22,15 +22,8 @@ def get_pdf_text(pdf_file_path):
 def get_text_chunks(pdf_file_path):
 
     if not pdf_file_path or not os.path.exists(pdf_file_path):
-<<<<<<< HEAD
-       
-        raise ValueError(f"Invalid PDF file path: {pdf_file_path}")
-    
-    print("4")
-=======
         print(pdf_file_path)
         raise ValueError(f"Invalid PDF file path: {pdf_file_path}")
->>>>>>> dc645fc4b39851026ba8c3c64e9b59cbe32353ac
 
     text = get_pdf_text(pdf_file_path)
 

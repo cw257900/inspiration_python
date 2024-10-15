@@ -19,23 +19,15 @@ load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 WEAVIATE_API_KEY = os.getenv("WEAVIATE_API_KEY")  # Weaviate API key
 WEAVIATE_URL = os.getenv("WEAVIATE_URL")
-<<<<<<< HEAD
 class_name = os.getenv("WEAVIATE_CLASS_NAME_PDF")
-#pdf_file_path = os.getenv("LOCAL_FILE_INPUT_PATH")
+
+# manual specify file path for now 
 pdf_file_path="/Users/Connie/Desktop/connie/inspiration_python/Rag/.venv/use_cases/pdfs/data/all-number-table.pdf"
-=======
-class_name = os.getenv("WEAVIATE_CLASS_NAME_PDF", "PDF_COLLECTIONS")
-pdf_file_path = os.getenv("LOCAL_FILE_INPUT_PATH")
->>>>>>> dc645fc4b39851026ba8c3c64e9b59cbe32353ac
 
 
 def vectordb_verify_data(client):
 
-<<<<<<< HEAD
-    collection_objects = client.data_object.get(class_name=class_name, limit=5)  # Adjust limit as needed
-=======
     collection_objects = client.data_object.get(class_name=class_name, limit=10)  # Adjust limit as needed
->>>>>>> dc645fc4b39851026ba8c3c64e9b59cbe32353ac
     for obj in collection_objects['objects']:
         print(f"Object ID: {obj['id']}, Data: {obj['properties']}")
         
@@ -44,11 +36,6 @@ def vectordb_verify_data(client):
             print(f"Property: {prop}, Value: {value}")
 
 
-<<<<<<< HEAD
-    print ("Finished vectordb_verify_data() print out 5 records")
-
-=======
->>>>>>> dc645fc4b39851026ba8c3c64e9b59cbe32353ac
 
 # Function to load text chunks into Weaviate
 def vectordb_upload_pdf():
@@ -60,10 +47,6 @@ def vectordb_upload_pdf():
         # Process PDF and upload chunks to Weaviate
         text_chunks = pdf_processor.get_text_chunks(pdf_file_path)
        
-<<<<<<< HEAD
-       
-=======
->>>>>>> dc645fc4b39851026ba8c3c64e9b59cbe32353ac
         for idx, chunk in enumerate(text_chunks):
             # Prepare the object to upload
             data_object = {
@@ -76,12 +59,6 @@ def vectordb_upload_pdf():
 
         vectordb_verify_data(client)
 
-<<<<<<< HEAD
-        print("Finished vectordb_upload_pdf()")
-        print (pdf_file_path)
-
-=======
->>>>>>> dc645fc4b39851026ba8c3c64e9b59cbe32353ac
 
     except Exception as e:
         print(f"vectordb_create.py Error retrieving class schema: {e}")
