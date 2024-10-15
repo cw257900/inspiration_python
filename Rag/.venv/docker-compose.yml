@@ -23,4 +23,7 @@ services:
       ENABLE_MODULES: 'text2vec-cohere,text2vec-huggingface,text2vec-openai,generative-openai,generative-cohere'
       BACKUP_FILESYSTEM_PATH: '/var/lib/weaviate/backups'
       CLUSTER_HOSTNAME: 'node1'
+      volumes: ./weaviate_data:/var/lib/weaviate  # Bind mount local storage
+
+
 ...

@@ -12,6 +12,3 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 WEAVIATE_API_KEY = os.getenv("WEAVIATE_API_KEY")  # Weaviate API key
 WEAVIATE_URL = os.getenv("WEAVIATE_URL")
 
-# Optional: Add class names to environment variables if needed
-WEAVIATE_CLASS_NAME_MOVIE = os.getenv("WEAVIATE_CLASS_NAME_MOVIE", "Movie")
-WEAVIATE_CLASS_NAME_PDF = os.getenv("WEAVIATE_CLASS_NAME_PDF", "PDF_Library")
