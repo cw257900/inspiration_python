@@ -10,7 +10,12 @@ To set up the project, follow these steps:
 
 1. Initialize a Git repository
 
-2. Used: pdfplumber, sentence_transformers, PIL for image, transformers for CLIPProcessor, CLIPModel, numpy , InstructorEmbedding, 
+3.   pdfplumber,
+4.   sentence_transformers,
+5.   PIL for image, transformers for CLIPProcessor, CLIPModel,
+6.   numpy ,
+7.   InstructorEmbedding,
+8.   Pinecone for VectorDB
 
-3. Add embeddings with text, table and image separately to pinecone 
+9. Add embeddings with text, table and image separately to pinecone 
 
