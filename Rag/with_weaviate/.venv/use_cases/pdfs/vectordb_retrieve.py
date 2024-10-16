@@ -2,7 +2,6 @@ import weaviate
 import os
 import json
 import sys
-sys.path.append("../../")
 import vectordb_init  # Assuming this is a module where init() is defined
 from utils import graphQL
 
@@ -50,11 +49,8 @@ def get_hybridsearch_withLimits(client, text, limit):
 
 def main():
 
-    class_name = 'PDF_COLLECTIONS'  # Define the class name you want to fetch objects from
+    class_name = input("Enter a Weaviate Class Collection Name: ")  # Define the class name you want to fetch objects from
     client = vectordb_init.init(class_name)  # Initialize the client using your `vectordb_init` module
-
-    #query_rlt = get_query_object_by_keyword(client, 'New Jersey')    
-
 
     # Prompt the user to input a question for hybrid search
     question = input("Enter a question for hybrid search: ")
