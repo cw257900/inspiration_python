@@ -9,7 +9,7 @@ load_dotenv()
 
 # Set API keys and Weaviate URL from environment variables
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-WEAVIATE_URL = os.getenv("WEAVIATE_URL")
+WEAVIATE_URL = config.WEAVIATE_URL
 
 headers = {
     "X-OpenAI-Api-Key": OPENAI_API_KEY

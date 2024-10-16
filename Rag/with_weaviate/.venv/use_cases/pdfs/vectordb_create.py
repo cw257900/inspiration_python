@@ -18,11 +18,16 @@ load_dotenv()
 # Set API keys and Weaviate URL from environment variables
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 WEAVIATE_API_KEY = os.getenv("WEAVIATE_API_KEY")  # Weaviate API key
-WEAVIATE_URL = os.getenv("WEAVIATE_URL")
+WEAVIATE_URL = config.WEAVIATE_URL
 class_name =config.class_name
 
 # manual specify file path for now 
-pdf_file_path="/Users/Connie/Desktop/connie/inspiration_python/Rag/.venv/use_cases/pdfs/data/all-number-table.pdf"
+pdf_file_path = config.LOCAL_FILE_INPUT_PATH
+
+print ("***********")
+print(pdf_file_path)
+
+print("$$$$$$$$$$")
 
 
 def vectordb_verify_data(client):
@@ -41,6 +46,7 @@ def vectordb_verify_data(client):
 def vectordb_upload_pdf():
     try:
         # Initialize Weaviate client
+        
         client = vectordb_init.init(class_name)
 
 

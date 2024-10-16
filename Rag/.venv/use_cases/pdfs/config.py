@@ -1,1 +1,0 @@
-class_name = "PDF_Vector_Collection"
