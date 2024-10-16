@@ -10,7 +10,7 @@ from weaviate.classes.init import Auth
 from weaviate.exceptions import WeaviateBaseError
 from utils import pdf_processor  
 import sys
-sys.path.append("../../")
+import config
 import vectordb_init  # Assuming this is a module where init() is defined
 
 load_dotenv()
@@ -19,7 +19,7 @@ load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 WEAVIATE_API_KEY = os.getenv("WEAVIATE_API_KEY")  # Weaviate API key
 WEAVIATE_URL = os.getenv("WEAVIATE_URL")
-class_name = os.getenv("WEAVIATE_CLASS_NAME_PDF")
+class_name =config.class_name
 
 # manual specify file path for now 
 pdf_file_path="/Users/Connie/Desktop/connie/inspiration_python/Rag/.venv/use_cases/pdfs/data/all-number-table.pdf"

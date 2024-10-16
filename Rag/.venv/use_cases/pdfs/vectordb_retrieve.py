@@ -2,7 +2,6 @@ import weaviate
 import os
 import json
 import sys
-sys.path.append("../../")
 import vectordb_init  # Assuming this is a module where init() is defined
 from utils import graphQL
 
