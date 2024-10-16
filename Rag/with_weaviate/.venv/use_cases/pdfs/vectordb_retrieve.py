@@ -39,9 +39,6 @@ def get_hybridsearch_withLimits(client, text, limit):
     # Dynamically replace {text} and {limit} in the query
     query = graphQL.gql_hybridsearch_withLimits.replace("{text}", text).replace("{limit}", str(limit))
 
-    print ("query excuted")
-    print (query)
-    
     result = client.query.raw(query)
     return result
 
@@ -61,8 +58,8 @@ def main():
 
     hybrid_rlt = get_hybridsearch_withLimits(client, question, limit)
 
-    print("\nResults for hybrid search:")
-    print(json.dumps(hybrid_rlt, indent=2))
+    #print("\nResults for hybrid search:")
+    #print(json.dumps(hybrid_rlt, indent=2))
 
 
 # Call the main function
