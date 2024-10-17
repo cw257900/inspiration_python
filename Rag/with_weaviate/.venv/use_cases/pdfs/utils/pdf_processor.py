@@ -23,8 +23,6 @@ def get_text_chunks(pdf_file_path):
     
 
     if not pdf_file_path or not os.path.exists(pdf_file_path):
-        print()
-        print(pdf_file_path)
         raise ValueError(f"Invalid PDF file path: {pdf_file_path}")
 
     text = get_pdf_text(pdf_file_path)
