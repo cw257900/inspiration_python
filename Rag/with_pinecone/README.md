@@ -47,3 +47,31 @@ https://medium.com/search?q=SWARM+in+LLM
 ```
 
 
+## Steps : with asynchronized upsert to Pinecone
+```
+async def create_embeddings_for_pdf():
+
+    print(f"1. split file into chunks: pdf_file_path: {pdf_file_path}")
+    text_splitter = RecursiveCharacterTextSplitter(
+        chunk_size=1000,
+        chunk_overlap=200,
+        length_function=len    
+    )
+    print (text_splitter)
+
+    print(f"2. load file with splitter to doc object")
+    docs = PyPDFLoader(pdf_file_path).load_and_split(text_splitter)
+
+    print(f"3. embed documents")
+    embedded_docs = [await embeddings.embeddings.aembed_documents([doc.page_content]) for doc in docs]
+
+    print(f"4. upload the embeded vectors to pinecone")
+    pinecone_vector_store.vector_store.upsert(vectors=embedded_docs)
+    
+    print(f"5. done: pdf_file_path: {pdf_file_path}")
+    
+
+if __name__ == "__main__":
+   asyncio.run(create_embeddings_for_pdf())
+
+```
