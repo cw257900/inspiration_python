@@ -30,13 +30,14 @@ print(f"pinecone_index_name: {pinecone_index_name}")
 
 load_dotenv()
 pinecone_api_key = os.getenv("PINECONE_API_KEY")
+openai_api_key = os.getenv("OPENAI_API_KEY")
 pinecone_index_name = configs.PINECONE_INDEX_NAME
 pinecone_url = configs.PINECONE_URL
 
-print("*********",pinecone_api_key,pinecone_index_name,pinecone_url, pinecone_index_name)
 
 pinecone=Pinecone(api_key=pinecone_api_key, environment = pinecone_url)
 
-embeddings = OpenAIEmbeddings(openai_api_key=pinecone_api_key)
+embeddings = OpenAIEmbeddings(openai_api_key=openai_api_key)
 
-print(f"1. embeddings:  {embeddings}")
+print(f"0.1. embeddings:  {embeddings}")
+

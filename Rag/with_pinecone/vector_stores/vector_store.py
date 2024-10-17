@@ -17,7 +17,6 @@ pinecone_api_key = os.getenv("PINECONE_API_KEY")
 pinecone_index_name = configs.PINECONE_INDEX_NAME
 pinecone_url = configs.PINECONE_URL
 
-print("*********",pinecone_api_key,pinecone_index_name,pinecone_url, pinecone_index_name)
 
 pinecone =  Pinecone(api_key=pinecone_api_key, environment=pinecone_url)
 
@@ -25,4 +24,4 @@ pinecone =  Pinecone(api_key=pinecone_api_key, environment=pinecone_url)
 vector_store = pinecone.Index(pinecone_index_name)
 
 
-print(f"vector_store: {vector_store}")
+print(f"0.2. vector_store: {vector_store}")
