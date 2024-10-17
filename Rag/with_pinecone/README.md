@@ -36,7 +36,7 @@ flask --app app.web init-db
 ```
 
 ## Reference
-'''
+```
 https://medium.com/ai-in-plain-english/advanced-rag-03-using-ragas-llamaindex-for-rag-evaluation-84756b82dca7 (validation )
 https://medium.com/@florian_algo/list/2334780a5667
 https://medium.com/search?q=RAGAS
@@ -44,7 +44,6 @@ https://medium.com/search?q=Graph+RAG
 https://medium.com/search?q=Semantic+RAG
 https://medium.com/search?q=SWARM+in+LLM
 
-
-'''
+```
 
 
