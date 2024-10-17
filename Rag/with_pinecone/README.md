@@ -46,4 +46,5 @@ https://medium.com/search?q=SWARM+in+LLM
 
 ```
 
+<img width="834" alt="image" src="https://github.com/user-attachments/assets/67345669-d5b8-4453-bd9c-143c3a178c87">
 
