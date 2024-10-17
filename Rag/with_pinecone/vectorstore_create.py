@@ -46,7 +46,7 @@ async def create_embeddings_for_pdf():
 
         # Create a tuple with ID, vector, and metadata
         embedded_docs.append({
-            "id": f"doc_{idx}",  # Unique ID
+            "id": f"doc_{idx}",  # Unique ID, per chunk
             "values": embedding[0],  # Embedding vector
             "metadata": {
                 "page_content": doc.page_content,  # Add doc content as metadata
