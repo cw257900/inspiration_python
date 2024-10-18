@@ -29,7 +29,7 @@ def main ():
 
     pdf_file_path = os.env("LOCAL_FILE_INPUT_PATH")
     print (pdf_file_path)
-    doc = pdf_file_path(pdf_file_path)
+    doc = get_checked_doc(pdf_file_path)
     print (pdf_file_path)
     
 
