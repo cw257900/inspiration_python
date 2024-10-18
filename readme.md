@@ -1,8 +1,6 @@
-
-
-
-## Introduction
+## Introduction (work in progress)
 ------------
+
 an app to chat with private knowledge base build from pdfs <br>
 ask question in natural English, app provides relevant reponse based on content from the documents <br>
 the app can only respond to questions related to the loaded pdfs
