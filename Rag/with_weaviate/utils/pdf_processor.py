@@ -27,14 +27,7 @@ def get_checked_doc(pdf_file_path):
         raise ValueError(f"Invalid PDF file path: {pdf_file_path}")
 
     text = get_pdf_text(pdf_file_path)
-    """
-    text_splitter = CharacterTextSplitter(
-        separator="\n",
-        chunk_size=1000,
-        chunk_overlap=200,
-        length_function=len
-    )
-    """
+   
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=1000,
         chunk_overlap=200,
