@@ -90,8 +90,10 @@ async def upsert_embeddings_to_vector_store(pdf_file_path, vector_store, pdf_pro
         traceback.print_exc()
 
     finally:
-        client.close()
+       # client.close() not needed , he Python client uses standard HTTP requests under the hood, which are automatically closed after the response is received. 
+        None
 
+        
 # Entry point
 if __name__ == "__main__":
     # Use asyncio.run to run the async function
