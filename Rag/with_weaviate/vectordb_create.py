@@ -34,7 +34,7 @@ WEAVIATE_STORE_NAME =configs.WEAVIATE_STORE_NAME
 
 def vectordb_verify_data(client):
 
-    collection_objects = client.data_object.get(class_name=class_name, limit=10)  # Adjust limit as needed
+    collection_objects = client.data_object.get(class_name=WEAVIATE_STORE_NAME, limit=10)  # Adjust limit as needed
 
     # Print each object in the collection
     for obj in collection_objects['objects']:
