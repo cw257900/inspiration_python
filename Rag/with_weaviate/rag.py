@@ -2,7 +2,7 @@ import weaviate
 import os
 from dotenv import load_dotenv
 import json
-from use_cases.pdfs.utils import pdf_processor  # Correct import
+
 
 # Load environment variables
 load_dotenv()
