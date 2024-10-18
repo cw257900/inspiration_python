@@ -1,7 +1,4 @@
-
-
-
-## Introduction
+## Introduction <Work In Progress>
 ------------
 an app to chat with private knowledge base build from pdfs <br>
 ask question in natural English, app provides relevant reponse based on content from the documents <br>
