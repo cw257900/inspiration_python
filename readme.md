@@ -1,6 +1,11 @@
-## Introduction (work in progress)
+## Consulting Engagements
 ------------
+https://calendly.com/chunping-bawv <br>
 
+chunping@yahoo.com
+
+## Introduction 
+------------
 an app to chat with private knowledge base build from pdfs <br>
 ask question in natural English, app provides relevant reponse based on content from the documents <br>
 the app can only respond to questions related to the loaded pdfs
@@ -17,6 +22,7 @@ pip install package_name && echo "package_name==$(pip show package_name | grep V
 ```
 docker-compose up -d  #start docker service as deamon 
 source .venv/bin/activate  #active the virtual environment
+
 
 ```
 
