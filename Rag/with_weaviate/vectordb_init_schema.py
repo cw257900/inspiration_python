@@ -2,14 +2,15 @@ import weaviate
 import os
 from dotenv import load_dotenv
 import uuid
-import config
+import configs
 
 # Load environment variables
 load_dotenv()
 
 # Set API keys and Weaviate URL from environment variables
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-WEAVIATE_URL = config.WEAVIATE_URL
+WEAVIATE_URL = os.getenv("WEAVIATE_URL")  # WEAVIATE_URL
+WEAVIATE_STORE_NAME = configs.WEAVIATE_STORE_NAME
 
 headers = {
     "X-OpenAI-Api-Key": OPENAI_API_KEY
@@ -67,9 +68,9 @@ def init_schema(client, class_name):
         ]
     elif class_name in ["PDF_COLLECTIONS", "PDF_Vector_Collection"]:
         properties = [
-            {"name": "pdf_name", "dataType": ["string"], "indexInverted": True},
+            {"name": "source", "dataType": ["string"], "indexInverted": True},
             {"name": "pdf_content", "dataType": ["text"], "indexInverted": True},
-            {"name": "pdf_chunk_id", "dataType": ["string"], "indexInverted": True}
+            {"name": "page_number", "dataType": ["int"], "indexInverted": True}
         ]
     else:
         print(f"Unknown class name: {class_name}")
@@ -94,6 +95,5 @@ def init(class_name):
 # Example usage
 if __name__ == "__main__":
     # Initialize and create vector schema for the class "PDF_Vector_Collection"
-    print(config.class_name)
-    class_name = config.class_name 
-    client = init(class_name)
+    
+    client = init(WEAVIATE_STORE_NAME)

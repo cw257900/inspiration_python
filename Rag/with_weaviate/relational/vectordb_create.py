@@ -8,14 +8,14 @@ from tqdm import tqdm
 import os
 import sys
 sys.path.append("../../")
-import vectordb_init
+import vectordb_init_schema
 
 
 # Instantiate your client (not shown). e.g.:
 # client = weaviate.connect_to_weaviate_cloud(...) or
 # client = weaviate.connect_to_local(...)
 
-client = vectordb_init.init()
+client = vectordb_init_schema.init()
 
 # Get the collection
 movies = client.schema.get("Movie")

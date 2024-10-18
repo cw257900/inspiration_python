@@ -9,6 +9,19 @@ the app can only respond to questions related to the loaded pdfs
 
 [RAG Reading from Medium](https://medium.com/@florian_algo/list/2334780a5667)
 
+## update requirements.txt 
+```
+pip install package_name && echo "package_name==$(pip show package_name | grep Version | awk '{print $2}')" >> requirements.txt
+```
+##
+
+## install and start weaviate db
+```
+docker-compose up -d  #start docker service as deamon 
+source .venv/bin/activate  #active the virtual environment
+
+```
+
 
 ## How It Works
 ------------
