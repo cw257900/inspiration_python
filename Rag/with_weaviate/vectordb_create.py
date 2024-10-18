@@ -34,7 +34,7 @@ WEAVIATE_STORE_NAME =configs.WEAVIATE_STORE_NAME
 
 def vectordb_verify_data(client):
 
-    collection_objects = client.data_object.get(class_name=class_name, limit=10)  # Adjust limit as needed
+    collection_objects = client.data_object.get(class_name=WEAVIATE_STORE_NAME, limit=10)  # Adjust limit as needed
 
     # Print each object in the collection
     for obj in collection_objects['objects']:
@@ -90,8 +90,10 @@ async def upsert_embeddings_to_vector_store(pdf_file_path, vector_store, pdf_pro
         traceback.print_exc()
 
     finally:
-        client.close()
+       # client.close() not needed , he Python client uses standard HTTP requests under the hood, which are automatically closed after the response is received. 
+        None
 
+        
 # Entry point
 if __name__ == "__main__":
     # Use asyncio.run to run the async function
