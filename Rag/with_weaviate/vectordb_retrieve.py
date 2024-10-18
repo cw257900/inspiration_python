@@ -1,17 +1,12 @@
 import weaviate
 import os
 import json
-import sys
-import vectordb_init_schema  # Assuming this is a module where init() is defined
+from dotenv import load_dotenv
 from models import graphQL
+from configs import configs
+from vector_stores import vector_store as vector_store 
 
-
-def get_query_object(class_name, query):
-
-    client = vectordb_init_schema.init(class_name)  # Initialize the client using your `vectordb_init` module
-    result = client.query.raw(query)  # Using the query from queries.py
-
-    return result
+load_dotenv()
 
 # Sample function to use gql_getSingleObjectById
 def get_query_object_by_id(client, uuid):
@@ -46,8 +41,8 @@ def get_hybridsearch_withLimits(client, text, limit):
 
 def main():
 
-    class_name = input("Enter a Weaviate Class Collection Name: ")  # Define the class name you want to fetch objects from
-    client = vectordb_init_schema.init(class_name)  # Initialize the client using your `vectordb_init` module
+    class_name = configs.WEAVIATE_STORE_NAME
+    client = vector_store.client
 
     # Prompt the user to input a question for hybrid search
     question = input("Enter a question for hybrid search: ")
@@ -58,8 +53,8 @@ def main():
 
     hybrid_rlt = get_hybridsearch_withLimits(client, question, limit)
 
-    #print("\nResults for hybrid search:")
-    #print(json.dumps(hybrid_rlt, indent=2))
+    print("\nResults for hybrid search:")
+    print(json.dumps(hybrid_rlt, indent=2))
 
 
 # Call the main function
