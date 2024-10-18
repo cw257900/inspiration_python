@@ -18,6 +18,7 @@ pip install package_name && echo "package_name==$(pip show package_name | grep V
 docker-compose up -d  #start docker service as deamon 
 source .venv/bin/activate  #active the virtual environment
 
+
 ```
 
 

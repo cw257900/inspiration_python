@@ -20,6 +20,14 @@ pip install package_name && echo "package_name==$(pip show package_name | grep V
 docker-compose up -d  #start docker service as deamon 
 source .venv/bin/activate  #active the virtual environment
 
+python -m venv venv
+source venv/bin/activate  # On Windows, use venv\Scripts\activate
+
+pip install <package-name> --upgrade --requirement requirements.txt
+pip freeze  > requirements.txt
+
+
+
 ```
 
 
