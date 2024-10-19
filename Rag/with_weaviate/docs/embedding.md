@@ -1,3 +1,9 @@
+## Embedding strategy
+
+    1. For doc with text based files, embedded with weaviate to streamline the process 
+    2. For doc needs process image, or special customized formular, use more customized embedding outstide Weaviate
+
+
 ## Pre-embeded Vector Approach 
 ------------
 ```
