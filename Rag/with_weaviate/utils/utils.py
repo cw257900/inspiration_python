@@ -1,9 +1,14 @@
 import weaviate
 import os
+import sys
 import weaviate
 from dotenv import load_dotenv
 from weaviate.exceptions import WeaviateBaseError
 import inspect
+
+# Add the parent directory (or wherever "with_pinecone" is located) to the Python path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from vector_stores import vector_store as vector_store
 
 # Load environment variables
 load_dotenv()
@@ -12,15 +17,17 @@ load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 WEAVIATE_URL = os.getenv("WEAVIATE_URL")
 
-#
-# Define headers
-headers = {"X-OpenAI-Api-Key": OPENAI_API_KEY}
+
+def class_exists(client, class_name):
+    """Check if a class already exists in the Weaviate schema."""
+    schema = client.schema.get()
+    return any(cls['class'] == class_name for cls in schema.get('classes', []))
 
 
 # Using context management if Weaviate client supports it
 def reflect_weaviate_client():
     # Perform your operations with the client here
-    client = weaviate.connect_to_local()
+    client = vector_store.client
 
     attributes = dir(client)
     for attr in attributes:
@@ -50,8 +57,8 @@ def reflect_weaviate_client():
     for name, method in inspect.getmembers(client.batch, predicate=inspect.isfunction):
         print(f"Method: {name}, Callable: {method}")
 
-    del client
-    
+    del client # as there might be underline leak; and client.close() doesn't work
+
 def main():
     reflect_weaviate_client()
   

@@ -1,19 +1,14 @@
 import os
-import traceback
-import datetime
-import asyncio
 import weaviate
-from weaviate.exceptions import WeaviateBaseError
 import weaviate
 import sys
 
 # Add the parent directory (or wherever "with_pinecone" is located) to the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from vector_stores import vector_store as vector_store
-from embeddings import openai_embeddings as embeddings
-from utils import pdf_processor
-from configs import configs
+from utils import utils
 
+from configs import configs
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -23,15 +18,13 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 WEAVIATE_URL = os.getenv("WEAVIATE_URL")  # WEAVIATE_URL
 WEAVIATE_STORE_NAME = configs.WEAVIATE_STORE_NAME  # WEAVIATE_STORE_NAME
 
-headers = {
-    "X-OpenAI-Api-Key": OPENAI_API_KEY
-}  # OpenAI API key for vectorization
+
 
 def create_class(client, class_name):
     properties = [
-            {"name": "source", "dataType": ["string"], "indexInverted": True},
-            {"name": "pdf_content", "dataType": ["text"], "indexInverted": True},
-            {"name": "page_number", "dataType": ["int"], "indexInverted": True}
+            {"name": "source", "dataType": ["string"], "indexInverted": True, "indexSearchable": True},
+            {"name": "pdf_content", "dataType": ["text"], "indexInverted": True,"indexSearchable": True},
+            {"name": "page_number", "dataType": ["int"], "indexInverted": True,"indexSearchable": True},
     ]
     class_schema = {
         "class": class_name,
@@ -61,9 +54,7 @@ def create_class(client, class_name):
         # client.close()
         pass
     
-   
-def delete_class(client, class_name):
-    client.schema.delete_class(class_name)
+
 
 def create_vector_class(client, class_name, properties, model="text-embedding-3-large", dimensions=1024):
     """Create a vectorized class in Weaviate with specified properties and OpenAI vectorizer."""
@@ -96,17 +87,10 @@ def create_vector_class(client, class_name, properties, model="text-embedding-3-
 
 
 
-def class_exists(client, class_name):
-    """Check if a class already exists in the Weaviate schema."""
-    schema = client.schema.get()
-    return any(cls['class'] == class_name for cls in schema.get('classes', []))
-
-
-
 def init_schema(client, class_name):
     """Initialize the schema with class creation based on the provided class name."""
     
-    if class_exists(client, class_name):
+    if utils.class_exists(client, class_name):
         print(f"Class '{class_name}' already exists.")
         return client
 
@@ -137,7 +121,7 @@ def init(class_name):
 
     """Initialize the Weaviate client and set up the schema for the specified class."""
     # Initialize the Weaviate client
-    client = weaviate.Client(WEAVIATE_URL, additional_headers=headers)
+    client = vector_store.client
 
     # Set up schema for the class
     init_schema(client, class_name)
@@ -151,28 +135,7 @@ if __name__ == "__main__":
     # Initialize and create vector schema for the class "PDF_Vector_Collection"
     
     #client = init(WEAVIATE_STORE_NAME)
-    
-    #create_class(client, class_name=WEAVIATE_STORE_NAME)
 
 
-    client = weaviate.Client("http://localhost:8080")
+    client = vector_store.client
     create_class(client, class_name=WEAVIATE_STORE_NAME)
-
-    # create class with embeddings manually
-    # create_class(client, class_name=configs.WEAVIATE_STORE_NAME) # embedding before data insert into db
-
-    """
-    delete_class(client, "PDF_COLLECTIONS")
-    print( " *** deleted  ***")
-  
-
-    # Print the class names (collections)
-    print("Existing collections (classes):")
-    schema = client.schema.get()
-    for cls in schema['classes']:
-        print(f" - {cls['class']}")
-
-    print()
-    """
-
-
