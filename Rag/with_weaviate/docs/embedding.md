@@ -2,7 +2,8 @@
 
     1. For doc with text based files, embedded with weaviate to streamline the process 
         Weaviate support following embedding options in ModuleConfig
-        <TODO add specification link>
+        - text2vec-openai for text-embedding-ada-002
+        
     2. For doc needs process image, or special customized formular, use more customized embedding outstide 
 
 
