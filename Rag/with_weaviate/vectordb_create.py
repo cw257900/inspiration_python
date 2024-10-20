@@ -1,7 +1,5 @@
 import os
 import traceback 
-import uuid as uuid_lib 
-from PyPDF2 import PdfReader
 from dotenv import load_dotenv
 from langchain.text_splitter import CharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
@@ -45,7 +43,6 @@ def vectordb_verify_data(client):
             print(f"Property: {prop}, Value: {value}")
 
 
-import asyncio
 
 # Assuming embeddings.embeddings.aembed_documents is async and we are running this in an async environment
 async def upsert_embeddings_to_vector_store(pdf_file_path, vector_store, pdf_processor, embeddings, WEAVIATE_STORE_NAME):
@@ -91,11 +88,31 @@ async def upsert_embeddings_to_vector_store(pdf_file_path, vector_store, pdf_pro
 
     finally:
        # client.close() not needed , he Python client uses standard HTTP requests under the hood, which are automatically closed after the response is received. 
-        None
+       del client  # Delete the client to release resources
 
-        
+
+def upsert_chunks_to_store(pdf_file_path, vector_store, WEAVIATE_STORE_NAME):
+
+    try:
+        client = vector_store.client
+        docs = pdf_processor.get_checked_doc(pdf_file_path)  # Load and process the document
+
+        print(f"1. Inserting chunks of {pdf_file_path} - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}") 
+
+    except Exception as e:
+        print(f"Error: {e}")
+        traceback.print_exc()
+
+    finally:
+       # client.close() not needed , he Python client uses standard HTTP requests under the hood, which are automatically closed after the response is received. 
+       del client  # Delete the client to release resources
+
+
 # Entry point
 if __name__ == "__main__":
     # Use asyncio.run to run the async function
-    asyncio.run(upsert_embeddings_to_vector_store(pdf_file_path, vector_store, pdf_processor, embeddings, WEAVIATE_STORE_NAME))
+    # asyncio.run(upsert_embeddings_to_vector_store(pdf_file_path, vector_store, pdf_processor, embeddings, WEAVIATE_STORE_NAME))
+
+     
+    upsert_chunks_to_store(pdf_file_path, vector_store, pdf_class_name=WEAVIATE_STORE_NAME)
        

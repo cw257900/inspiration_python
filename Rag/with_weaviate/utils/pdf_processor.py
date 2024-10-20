@@ -7,12 +7,9 @@ from langchain.text_splitter import CharacterTextSplitter,RecursiveCharacterText
 from langchain_openai import OpenAIEmbeddings
 
 load_dotenv()
-
-   
 # Function to split the extracted text into chunks for better embedding
 def get_checked_doc(pdf_file_path):
     
-
     if not pdf_file_path or not os.path.exists(pdf_file_path):
         raise ValueError(f"Invalid PDF file path: {pdf_file_path}")
    
