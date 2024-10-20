@@ -1,22 +1,25 @@
 # Chunking and Embedding
 
+
 ## Chunking Strategy
 
-- **Options**:
-    &nbsp; &nbsp; &nbsp; &nbsp;Extract Text: tools as `PyPDF2` or `pdfminer`.
-    &nbsp; &nbsp; &nbsp; &nbsp;Semantic Splitting: OpenAI GPT, Hugging Face models, or `LangChain`'s `RecursiveCharacterTextSplitter`.
-- **selected**:
-    &nbsp; &nbsp; &nbsp; &nbsp;CharacterTextSplitter, RecursiveCharacterTextSplitter
+Options:
+- Extract Text: tools as `PyPDF2` or `pdfminer`.
+- Semantic Splitting: OpenAI GPT, Hugging Face models, or `LangChain`'s `RecursiveCharacterTextSplitter`.
+
+Selected:
+- CharacterTextSplitter, RecursiveCharacterTextSplitter
+
 
 ---
 
 ## Embedding Strategy
 
-- **Where to do the Embedding**:  
-    1. Pre-embed vectors before loading to Weaviate, or <br>
-    2. Use [Weaviate embed](https://weaviate.io/developers/weaviate/concepts/vector-quantization) during object creation. <br>
+Where to do the Embedding
+    1. Pre-embed vectors before loading to Weaviate, or 
+    2. Use [Weaviate embed](https://weaviate.io/developers/weaviate/concepts/vector-quantization) during object creation. 
 
-- **What models to use**:
+What models to use
     > **openai**: <br>
     > text-embedding-3-large, dimensions: 3072 <br>
     > text-embedding-ada-002, dimensions: 1536 <br>
@@ -26,7 +29,7 @@
     > **huggingface**: <br>
     > sentence-transformers/all-MiniLM-L12-v2, dimention=384, segments=192, 128, 96 <br>
 
-- **Selected**:  
+Selected:  
 Weaviate to embed: text2vec-openai text-embedding-ada-002, dimensions: 1536, max token 8191
 ```
     vectorizer_config=
