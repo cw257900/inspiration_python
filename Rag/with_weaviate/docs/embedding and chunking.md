@@ -3,10 +3,10 @@
 ## Chunking Strategy
 
 - **Options**:
-- Extract Text: tools as `PyPDF2` or `pdfminer`.
-- Semantic Splitting: OpenAI GPT, Hugging Face models, or `LangChain`'s `RecursiveCharacterTextSplitter`.
+    &nbsp; &nbsp; &nbsp; &nbsp;Extract Text: tools as `PyPDF2` or `pdfminer`.
+    &nbsp; &nbsp; &nbsp; &nbsp;Semantic Splitting: OpenAI GPT, Hugging Face models, or `LangChain`'s `RecursiveCharacterTextSplitter`.
 - **selected**:
-- CharacterTextSplitter, RecursiveCharacterTextSplitter
+    &nbsp; &nbsp; &nbsp; &nbsp;CharacterTextSplitter, RecursiveCharacterTextSplitter
 
 ---
 
@@ -21,10 +21,10 @@
     > text-embedding-3-large, dimensions: 3072 <br>
     > text-embedding-ada-002, dimensions: 1536 <br>
     > text-embedding-3-small,dimensions: 1536 <br>
-    > cohere: <br>
-    > model: nname=multilingual-22-12, dimension=768,semgments=384, 256, 192, 96
-    > huggingface: <br>
-    > sentence-transformers/all-MiniLM-L12-v2, dimention=384, segments=192, 128, 96
+    > **cohere**: <br>
+    > nname=multilingual-22-12, dimension=768,semgments=384, 256, 192, 96 <br>
+    > **huggingface**: <br>
+    > sentence-transformers/all-MiniLM-L12-v2, dimention=384, segments=192, 128, 96 <br>
 
 - **Selected**:  
 Weaviate to embed: text2vec-openai text-embedding-ada-002, dimensions: 1536, max token 8191
