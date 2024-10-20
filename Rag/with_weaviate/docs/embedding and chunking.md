@@ -19,7 +19,7 @@ Options:
     openai: 
     > text-embedding-3-large, dimensions: 3072 <br>
     > text-embedding-ada-002, dimensions: 1536 <br>
-    > text-embedding-3-small,dimensions: 768 <br>
+    > text-embedding-3-small,dimensions: 1536 <br>
     
     cohere: 
     > model: nname=multilingual-22-12, dimension=768,semgments=384, 256, 192, 96
@@ -30,9 +30,16 @@ Options:
 Selected:
 - Weaviate to embed: text2vec-openai text-embedding-ada-002, dimensions: 1536, max token 8191
 ```
-    vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_openai(),
-    generative_config=wvc.config.Configure.Generative.cohere(),        
-
+   ectorizer_config=
+            wvc.config.Configure.Vectorizer.text2vec_openai(
+                model="text-embedding-ada-002",
+                name="page_content",
+                source_properties="page_content"
+            ),    # Set the vectorizer to "text2vec-openai" to use the OpenAI API for vector-related operations
+            generative_config=wvc.config.Configure.Generative.cohere(
+                name="tiles", 
+                source="page_content"
+            ),             
 ```
 
 ---
