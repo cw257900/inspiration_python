@@ -1,33 +1,31 @@
 # Chunking and Embedding
 
-## Chunking Strategy
+#### Chunking Strategy
 
-Options:
-- **Extract Text**: Tools like `PyPDF2` or `pdfminer`.
-- **Semantic Splitting**: OpenAI GPT, Hugging Face models, or `LangChain`'s `RecursiveCharacterTextSplitter`.
-
-Selected:
-- **CharacterTextSplitter** and **RecursiveCharacterTextSplitter**
+- **Options**:
+- Extract Text: tools as `PyPDF2` or `pdfminer`.
+- Semantic Splitting: OpenAI GPT, Hugging Face models, or `LangChain`'s `RecursiveCharacterTextSplitter`.
+- **selected**:
+- CharacterTextSplitter, RecursiveCharacterTextSplitter
 
 ---
 
 ## Embedding Strategy
 
-- **Opetions**:  
-Where to do the Embedding: 
+- **Where to do the Embedding**:  
     1. Pre-embed vectors before loading to Weaviate, or <br>
     2. Use [Weaviate embed](https://weaviate.io/developers/weaviate/concepts/vector-quantization) during object creation. <br>
-    
-What model and package to use: <br>
-    openai: 
+
+- **What models to use**:
+    - openai: 
     > text-embedding-3-large, dimensions: 3072 <br>
     > text-embedding-ada-002, dimensions: 1536 <br>
     > text-embedding-3-small,dimensions: 1536 <br>
     
-    cohere: 
+    - cohere: 
     > model: nname=multilingual-22-12, dimension=768,semgments=384, 256, 192, 96
     
-    huggingface: 
+    - huggingface: 
     > sentence-transformers/all-MiniLM-L12-v2, dimention=384, segments=192, 128, 96
 
 - **Selected**:  
