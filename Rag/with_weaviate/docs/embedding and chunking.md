@@ -2,24 +2,42 @@
 
 ## Chunking Strategy
 
-### Options:
+Options:
 - **Extract Text**: Tools like `PyPDF2` or `pdfminer`.
 - **Semantic Splitting**: OpenAI GPT, Hugging Face models, or `LangChain`'s `RecursiveCharacterTextSplitter`.
 
-### Selected:
+Selected:
 - **CharacterTextSplitter** and **RecursiveCharacterTextSplitter**
 
 ---
 
 ## Embedding Strategy
 
-### Options:
+Options:
 - **When to Embed**: Pre-embed vectors before loading to Weaviate, or let Weaviate embed during object creation.
 
-### Selected:
-- **Weaviate** to embed using **OpenAI's `text-embedding-ada-002`** (1536 dimensions).
+
+
+Selected:
+- **Weaviate** to embed: text2vec-openai 
+```
+    "vectorizer": "text2vec-openai",
+        "moduleConfig": {
+            "text2vec-openai": {
+                "model": model,
+                "type": "text",
+                "vectorizeClassName": False
+            }
+        },
+        "vectorIndexConfig": {
+            "dimensions": dimensions  # Set vector dimensions
+        }
+```
 
 ---
+## Embedding Approach Analysis
+
+```
 
 ## Pre-Embedded Vector Approach
 
@@ -65,3 +83,4 @@
 - **Flexibility**:  
   - Without: Switch models easily.  
   - With: Tied to Weaviate’s modules.
+```
