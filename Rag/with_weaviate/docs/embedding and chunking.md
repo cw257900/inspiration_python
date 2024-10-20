@@ -25,13 +25,13 @@ Where to do the Embedding:
 
 What models to use:
 1. openai: 
-- text-embedding-3-large, dimensions: 3072 
-- text-embedding-ada-002, dimensions: 1536 
-- text-embedding-3-small,dimensions: 1536 
+    - text-embedding-3-large, dimensions: 3072 
+    - text-embedding-ada-002, dimensions: 1536 
+    - text-embedding-3-small,dimensions: 1536 
 2. cohere: 
--   name=multilingual-22-12, dimension=768,semgments=384, 256, 192, 96 
+    - name=multilingual-22-12, dimension=768,semgments=384, 256, 192, 96 
 3. huggingface: 
--   sentence-transformers/all-MiniLM-L12-v2, dimention=384, segments=192, 128, 96 
+    - sentence-transformers/all-MiniLM-L12-v2, dimention=384, segments=192, 128, 96 
 
 Selected: 
 ```
@@ -48,7 +48,9 @@ Selected:
             ),             
 ```
 
+
 ---
+
 ## Embedding Approach Analysis
 
 
