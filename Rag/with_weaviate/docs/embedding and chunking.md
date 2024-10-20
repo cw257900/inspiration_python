@@ -17,9 +17,9 @@ Options:
 - When to Embed: Pre-embed vectors before loading to Weaviate, or let [Weaviate embed](https://weaviate.io/developers/weaviate/concepts/vector-quantization) during object creation. <br>
 - What models to use <br>
     openai: 
-    > text-embedding-3-large, dimensions: 3072
-    > text-embedding-ada-002, dimensions: 1536
-    > text-embedding-3-small,dimensions: 768
+    > text-embedding-3-large, dimensions: 3072 <br>
+    > text-embedding-ada-002, dimensions: 1536 <br>
+    > text-embedding-3-small,dimensions: 768 <br>
     
     cohere: 
     > model: nname=multilingual-22-12, dimension=768,semgments=384, 256, 192, 96
@@ -33,7 +33,6 @@ Selected:
     vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_openai(),
     generative_config=wvc.config.Configure.Generative.cohere(),        
 
-![alt text](image-1.png)
 ```
 
 ---
