@@ -33,8 +33,9 @@ What models to use:
 3. huggingface: 
 -   sentence-transformers/all-MiniLM-L12-v2, dimention=384, segments=192, 128, 96 
 
-Selected: Weaviate to embed: text2vec-openai text-embedding-ada-002, dimensions: 1536, max token 8191
+Selected: 
 ```
+    Weaviate to embed: text2vec-openai text-embedding-ada-002, dimensions: 1536, max token 8191
     vectorizer_config=
             wvc.config.Configure.Vectorizer.text2vec_openai(
                 model="text-embedding-ada-002",
