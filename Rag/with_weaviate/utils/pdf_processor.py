@@ -7,6 +7,8 @@ from langchain.text_splitter import CharacterTextSplitter,RecursiveCharacterText
 from langchain_openai import OpenAIEmbeddings
 
 load_dotenv()
+
+
 # Function to split the extracted text into chunks for better embedding
 def get_checked_doc(pdf_file_path):
     

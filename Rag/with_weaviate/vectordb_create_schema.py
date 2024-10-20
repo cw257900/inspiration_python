@@ -120,9 +120,10 @@ def create_class_with_vectorizer_index_and_dims(client, class_name, class_descri
     dimensions: 1024
     """
 
-    
+    print ("requested to create new collection: ", class_name, " with vectorizer: ", model, " and dim: ", dimensions)
     try:
-        collection = client.collections.create(
+      
+        collection = client.collections.create( #this is v4 weaviate
             name=class_name,
             description=class_description,
             vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_openai(),    # Set the vectorizer to "text2vec-openai" to use the OpenAI API for vector-related operations
@@ -155,6 +156,7 @@ def create_class_with_vectorizer_index_and_dims(client, class_name, class_descri
         )
 
     finally:
+        
         client.close()
 
 
@@ -162,6 +164,9 @@ def create_class_with_vectorizer_index_and_dims(client, class_name, class_descri
 # Example usage
 if __name__ == "__main__":
 
+    #client = vector_store.client
+    
+    # Initialize the Weaviate client
     client = weaviate.connect_to_local(
         headers={
             "X-OpenAI-Api-Key": OPENAI_API_KEY # Replace with your inference API key
