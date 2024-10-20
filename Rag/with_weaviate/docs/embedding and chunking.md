@@ -17,7 +17,8 @@ Selected:
 Where to do the Embedding: 
     1. Pre-embed vectors before loading to Weaviate, or <br>
     2. Use [Weaviate embed](https://weaviate.io/developers/weaviate/concepts/vector-quantization) during object creation. <br>
-What model and package to use: 
+    
+What model and package to use: <br>
     openai: 
     > text-embedding-3-large, dimensions: 3072 <br>
     > text-embedding-ada-002, dimensions: 1536 <br>
