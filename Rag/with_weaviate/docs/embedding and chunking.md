@@ -17,15 +17,13 @@
     2. Use [Weaviate embed](https://weaviate.io/developers/weaviate/concepts/vector-quantization) during object creation. <br>
 
 - **What models to use**:
-    > openai: 
+    > **openai**: <br>
     > text-embedding-3-large, dimensions: 3072 <br>
     > text-embedding-ada-002, dimensions: 1536 <br>
     > text-embedding-3-small,dimensions: 1536 <br>
-    
-    > cohere: 
+    > cohere: <br>
     > model: nname=multilingual-22-12, dimension=768,semgments=384, 256, 192, 96
-    
-    > huggingface: 
+    > huggingface: <br>
     > sentence-transformers/all-MiniLM-L12-v2, dimention=384, segments=192, 128, 96
 
 - **Selected**:  
