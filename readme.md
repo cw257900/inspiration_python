@@ -1,4 +1,4 @@
-## Consulting Engagements
+## Engagements
 ------------
 https://calendly.com/chunping-bawv <br>
 
@@ -19,10 +19,10 @@ pip install package_name && echo "package_name==$(pip show package_name | grep V
 ##
 
 ## install and start weaviate db
+------------
 ```
 docker-compose up -d  #start docker service as deamon 
 source .venv/bin/activate  #active the virtual environment
-
 
 ```
 
