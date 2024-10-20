@@ -24,4 +24,4 @@ headers = {
 # Initialize the Weaviate client
 client = weaviate.Client(WEAVIATE_URL, additional_headers=headers)
 
-print(f"0.2. vector_store client from venctor_store.py")
+print(f"0.2. vector_store client from venctor_store.py; client status", client.is_ready())
