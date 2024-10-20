@@ -9,6 +9,7 @@ the app can only respond to questions related to the loaded pdfs
 
 [RAG Reading from Medium](https://medium.com/@florian_algo/list/2334780a5667)
 [Weaviate Quick Start](https://weaviate.io/developers/weaviate/quickstart)
+[Weaviate API Specification](https://weaviate.io/developers/weaviate/api/rest#tag/schema/GET/schema)
 
 ## update requirements.txt 
 ```
