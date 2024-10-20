@@ -18,6 +18,7 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 WEAVIATE_URL = os.getenv("WEAVIATE_URL")  # WEAVIATE_URL
 class_name = configs.WEAVIATE_STORE_NAME  # WEAVIATE_STORE_NAME
 class_description = configs.WEAVIATE_STORE_DESCRIPTION
+text2vec_model=configs.text2vec_model  
 
 
 """
@@ -62,8 +63,9 @@ def create_class(client, class_name):
 
 def create_class_with_vectorizer_and_dims(client, class_name, model="text-embedding-3-large", dimensions=1024):
     """ 
-    vectorizer: text2vec-openai package model text-embedding-3-large
-    dimensions: 1024
+    text-embedding-3-large, dimensions: 3072
+    text-embedding-ada-002, dimensions: 1536
+    text-embedding-3-small, dimensions: 768
     """
     if utils.class_exists(client, class_name):
         print(f"Class '{class_name}' already exists.")
@@ -114,20 +116,28 @@ def create_class_with_vectorizer_and_dims(client, class_name, model="text-embedd
     finally:
         client.close()
 
-def create_class_with_vectorizer_index_and_dims(client, class_name, class_description, dimensions=1024):
+def create_class_with_vectorizer_index_and_dims(client, class_name, class_description, model=text2vec_model):
     """ 
-    vectorizer: text2vec-openai package model text-embedding-3-large
-    dimensions: 1024
+    text-embedding-3-large, dimensions: 3072
+    text-embedding-ada-002, dimensions: 1536
+    text-embedding-3-small, dimensions: 1536
     """
 
-    print ("requested to create new collection: ", class_name, " with vectorizer: ", " and dim: ", dimensions)
+    print ("requested to create new collection: ", class_name, " with vectorizer: ", " model: ", model)
     try:
       
         collection = client.collections.create( #this is v4 weaviate
             name=class_name,
             description=class_description,
-            vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_openai(),    # Set the vectorizer to "text2vec-openai" to use the OpenAI API for vector-related operations
-            generative_config=wvc.config.Configure.Generative.cohere(),             # Set the generative module to "generative-cohere" to use the Cohere API for RAG
+            vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_openai(
+                model=text2vec_model,
+                name="page_content",
+                source_properties="page_content"
+            ),    # Set the vectorizer to "text2vec-openai" to use the OpenAI API for vector-related operations
+            generative_config=wvc.config.Configure.Generative.cohere(
+                name="tiles", 
+                source="page_content"
+            ),             # Set the generative module to "generative-cohere" to use the Cohere API for RAG
             properties=[
                 wvc.config.Property(
                     name="page_content",

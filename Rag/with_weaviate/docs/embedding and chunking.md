@@ -72,10 +72,8 @@ Cons:
 
 1. Weaviate handles embedding via `text2vec-openai`.
 2. Embedding happens automatically during object creation.
-
-- Simplifies embedding process; direct integration with OpenAI.
-  
-- Dependent on external services; less control over the process.
+3. Simplifies embedding process; direct integration with OpenAI.
+4. Dependent on external services; less control over the process.
 
 ---
 
