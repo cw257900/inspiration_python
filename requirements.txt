@@ -46,6 +46,7 @@ debugpy==1.8.7
 decorator==5.1.1
 defusedxml==0.7.1
 Deprecated==1.2.14
+dirtyjson==1.0.8
 distlib==0.3.9
 distro==1.9.0
 docker==7.1.0
@@ -128,6 +129,21 @@ langserve==0.3.0
 langsmith==0.1.134
 lazy-object-proxy==1.10.0
 linkify-it-py==2.0.3
+llama-cloud==0.1.4
+llama-index-agent-openai==0.3.4
+llama-index-cli==0.3.1
+llama-index-core==0.11.18
+llama-index-embeddings-openai==0.2.5
+llama-index-indices-managed-llama-cloud==0.4.0
+llama-index-legacy==0.9.48.post3
+llama-index-llms-openai==0.2.15
+llama-index-multi-modal-llms-openai==0.2.2
+llama-index-program-openai==0.2.0
+llama-index-question-gen-openai==0.2.0
+llama-index-readers-file==0.2.2
+llama-index-readers-llama-parse==0.3.0
+llama-parse==0.5.10
+llama_index==0.5.5
 looseversion==1.3.0
 lxml==5.3.0
 Markdown==3.7
@@ -205,7 +221,7 @@ prance==23.6.21.0
 prometheus_client==0.21.0
 prompt_toolkit==3.0.48
 propcache==0.2.0
-protobuf==3.20.0 
+protobuf==5.28.2
 prov==2.0.1
 psutil==6.0.0
 ptyprocess==0.7.0
@@ -225,7 +241,7 @@ PyJWT==2.9.0
 PyMeta3==0.5.1
 PyMuPDF==1.24.11
 pyparsing==3.1.4
-pypdf==5.0.1
+pypdf==4.3.1
 PyPDF2==3.0.1
 pypdfium2==4.30.0
 PyPika==0.48.9
@@ -274,6 +290,7 @@ sse-starlette==1.8.2
 stack-data==0.6.3
 starlette==0.39.2
 streamlit==1.39.0
+striprtf==0.0.26
 sympy==1.13.3
 tabulate==0.9.0
 tenacity==8.5.0
@@ -309,7 +326,7 @@ virtualenv==20.26.6
 watchdog==5.0.3
 watchfiles==0.24.0
 wcwidth==0.2.13
-weaviate-client>=3.26.7;<4.0.0
+weaviate-client==4.9.0
 webcolors==24.8.0
 webencodings==0.5.1
 websocket-client==1.8.0
