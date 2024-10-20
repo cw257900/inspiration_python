@@ -30,7 +30,7 @@ Options:
 Selected:
 - Weaviate to embed: text2vec-openai text-embedding-ada-002, dimensions: 1536, max token 8191
 ```
-   ectorizer_config=
+    vectorizer_config=
             wvc.config.Configure.Vectorizer.text2vec_openai(
                 model="text-embedding-ada-002",
                 name="page_content",
