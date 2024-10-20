@@ -46,34 +46,32 @@ Selected:
 ## Embedding Approach Analysis
 
 
-### Pre-Embedded Vector Approach
+#### Pre-Embedded Vector Approach
 
 1. Embed PDF chunks using external models (e.g., `LangChain OpenAIEmbeddings`).  
 2. Store vectors directly in Weaviate, bypassing its internal embedding module.
 
-### Pros:
+Pros:
 - Full control over model selection and preprocessing.
 - Avoids Weaviate module costs and dependencies.
 
-### Cons:
+Cons:
 - More complex embedding management outside Weaviate.
 
 ---
 
-## With `moduleConfig` (using `text2vec-openai`)
+#### With `moduleConfig` (using `text2vec-openai`)
 
 1. Weaviate handles embedding via `text2vec-openai`.
 2. Embedding happens automatically during object creation.
 
-### Pros:
 - Simplifies embedding process; direct integration with OpenAI.
   
-### Cons:
 - Dependent on external services; less control over the process.
 
 ---
 
-## Key Differences
+### Key Differences
 
 - **Control**:  
   - Without `moduleConfig`: Full control over embeddings.  
