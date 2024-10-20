@@ -8,7 +8,8 @@ import inspect
 
 # Add the parent directory (or wherever "with_pinecone" is located) to the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from vector_stores import vector_store as vector_store
+import vector_stores.vector_store_local as vector_store_local
+
 import configs.configs as configs
 
 # Load environment variables
@@ -24,14 +25,14 @@ class_name =configs.WEAVIATE_STORE_NAME
 class_description =configs.WEAVIATE_STORE_DESCRIPTION
 
 
-def class_exists(client, class_name):
+def class_exists(client, class_name): #v3
     """Check if a class already exists in the Weaviate schema."""
     schema = client.schema.get()
     return any(cls['class'] == class_name for cls in schema.get('classes', []))
 
 
 # Using context management if Weaviate client supports it
-def reflect_weaviate_client():
+def reflect_weaviate_client(vector_store):
     # Perform your operations with the client here
     client = vector_store.client
 
@@ -67,20 +68,33 @@ def reflect_weaviate_client():
 
 
 def get_class_counts(client, class_name):
+    try:
+        # Use the new GraphQL client methods for aggregation
+        query = (
+            client.graphql.aggregate(class_name)
+            .with_meta_count()  # This requests the count of objects in the class
+            .do()
+        )
+        
+        # Extract the count from the result
+        count = query['data']['Aggregate'][class_name][0]['meta']['count']
+        return count
 
-    # Perform the aggregate query to get the count of objects
-    result = client.query.aggregate(class_name).with_meta_count().do()
+    except Exception as e:
+        print(f"Error while getting class counts: {e}")
+        raise
+    
 
-    # Extract the count from the response
-    count = result['data']['Aggregate']['PDF_COLLECTION'][0]['meta']['count']
-    
-    print(f"Total count of {class_name}: {count}")
-    return count
-    
+def check_object_exists(client, object_id):
+    try:
+        return client.data_object.exists(object_id)
+    except Exception as e:
+        print(f"Error while checking object existence: {e}")
+        return False
 
 def main():
-    #reflect_weaviate_client()
-    get_class_counts(vector_store.client, class_name)
+    client = weaviate.connect_to_local()
+    get_class_counts(client, "PDF_COLLECTION") 
   
    
 

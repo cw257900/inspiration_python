@@ -28,4 +28,4 @@ client = weaviate.connect_to_local(
         }
     )
 
-print(f"0.2. vector_store client from venctor_store.py")
+print(f"0.2. vector_store client from venctor_store_local.py: client status", client.is_ready())
