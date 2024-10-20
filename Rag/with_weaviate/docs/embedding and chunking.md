@@ -14,23 +14,25 @@ Selected:
 ## Embedding Strategy
 
 Options:
-- **When to Embed**: Pre-embed vectors before loading to Weaviate, or let [Weaviate embed](https://weaviate.io/developers/weaviate/concepts/vector-quantization) during object creation.
-![alt text](image-1.png)
+- When to Embed: Pre-embed vectors before loading to Weaviate, or let [Weaviate embed](https://weaviate.io/developers/weaviate/concepts/vector-quantization) during object creation.
+    > openai: 
+    > > text-embedding-3-large, dimensions: 3072
+    > > text-embedding-ada-002, dimensions: 1536
+    > > text-embedding-3-small,dimensions: 768
+    ![alt text](image-2.png)
+    > cohere: 
+    > > model: nname=multilingual-22-12, dimension=768,semgments=384, 256, 192, 96
+    > huggingface: 
+    > > sentence-transformers/all-MiniLM-L12-v2, dimention=384, segments=192, 128, 96
+- What model to use from text2vec-openai 
 
 Selected:
-- **Weaviate** to embed: text2vec-openai 
+- Weaviate to embed: text2vec-openai text-embedding-ada-002, dimensions: 1536, max token 8191
 ```
-    "vectorizer": "text2vec-openai",
-        "moduleConfig": {
-            "text2vec-openai": {
-                "model": model,
-                "type": "text",
-                "vectorizeClassName": False
-            }
-        },
-        "vectorIndexConfig": {
-            "dimensions": dimensions  # Set vector dimensions
-        }
+    vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_openai(),
+    generative_config=wvc.config.Configure.Generative.cohere(),        
+
+![alt text](image-1.png)
 ```
 
 ---

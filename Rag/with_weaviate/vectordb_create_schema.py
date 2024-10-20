@@ -114,13 +114,13 @@ def create_class_with_vectorizer_and_dims(client, class_name, model="text-embedd
     finally:
         client.close()
 
-def create_class_with_vectorizer_index_and_dims(client, class_name, class_description, model="text-embedding-3-large", dimensions=1024):
+def create_class_with_vectorizer_index_and_dims(client, class_name, class_description, dimensions=1024):
     """ 
     vectorizer: text2vec-openai package model text-embedding-3-large
     dimensions: 1024
     """
 
-    print ("requested to create new collection: ", class_name, " with vectorizer: ", model, " and dim: ", dimensions)
+    print ("requested to create new collection: ", class_name, " with vectorizer: ", " and dim: ", dimensions)
     try:
       
         collection = client.collections.create( #this is v4 weaviate
