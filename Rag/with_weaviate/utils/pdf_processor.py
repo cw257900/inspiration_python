@@ -46,7 +46,7 @@ def main ():
  
     pdf_file_path =  os.getenv("LOCAL_FILE_INPUT_PATH")
     doc = get_chunked_doc(pdf_file_path)
-    print(f"1. Number of chunks from pdf: {len(doc)}")
+    print(f"001. Number of chunks from pdf: {len(doc)}")
 
 
 if __name__ == "__main__":

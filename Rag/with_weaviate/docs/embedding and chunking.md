@@ -1,13 +1,33 @@
+
+# Chunking and Embedding
+
+
+## Chunking Strategy
+
+What can be done:
+
+- Extract Text from PDF: PyPDF2 or pdfminer
+- Perform Semantic Splitting: OpenAP's GPT or Hugging Face (BERT, RoBERTa)
+  LangChain: RecursiveCharacterTextSplitter or TokenTextSplitter
+
+what's selected: 
+- CharacterTextSplitter,RecursiveCharacterTextSplitter
+
+
 ## Embedding strategy
 
-    1. For doc with text based files, embedded with weaviate to streamline the process 
-        Weaviate support following embedding options in ModuleConfig
-        - text2vec-openai for text-embedding-ada-002
+What can be done:
+- Decide when to perform embedding: Pre-embeded vector before loading to Weaviate vs embeded by weaviate while loading
+- [weaviate supports](https://weaviate.io/developers/weaviate/concepts/vector-quantization):
+![alt text](image.png)
+
         
-    2. For doc needs process image, or special customized formular, use more customized embedding outstide 
+What's selected: 
+- weaviate to embed: openai's model: text-embedding-ada-002 with dimension 1536
+- openai key is needed
 
 
-## Pre-embeded Vector Approach 
+## Pre-embeded Vector Approach Analysis
 ------------
 ```
 what happens  
