@@ -32,14 +32,12 @@ def get_object_by_uuid():
     client = weaviate.connect_to_local()
     collection = client.collections.get("PDF_COLLECTION")
 
-    from weaviate.classes.config import ConsistencyLevel
-
     questions = client.collections.get("PDF_COLLECTION").with_consistency_level(
         consistency_level=ConsistencyLevel.QUORUM
     )
     print(" ")
     response = collection.query.fetch_object_by_id("0f105783-ca15-52b1-81e8-eb18a09c808c")
-    esponse = collection.query.fetch_object_by_id("0f105783-ca15-52b1-81e8-eb18a09")
+    response = collection.query.fetch_object_by_id("0f105783-ca15-52b1-81e8-eb18a09")  #raise Exception :aise ValueError("Not valid 'uuid' or 'uuid' can not be extracted from value")
 
     print(response)
     print()

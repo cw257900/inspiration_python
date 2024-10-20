@@ -67,7 +67,7 @@ def reflect_weaviate_client(vector_store):
     del client # as there might be underline leak; and client.close() doesn't work
 
 
-def get_class_counts(client, class_name):
+def get_class_counts(client, class_name): #v3 
     try:
         # Use the new GraphQL client methods for aggregation
         query = (
@@ -85,7 +85,7 @@ def get_class_counts(client, class_name):
         raise
     
 
-def check_object_exists(client, object_id):
+def check_object_exists(client, object_id):#v3
     try:
         return client.data_object.exists(object_id)
     except Exception as e:
