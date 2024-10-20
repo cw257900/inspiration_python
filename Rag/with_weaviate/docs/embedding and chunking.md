@@ -24,7 +24,6 @@ Options:
     > model: nname=multilingual-22-12, dimension=768,semgments=384, 256, 192, 96
     > huggingface: 
     > sentence-transformers/all-MiniLM-L12-v2, dimention=384, segments=192, 128, 96
-- What model to use from text2vec-openai 
 
 Selected:
 - Weaviate to embed: text2vec-openai text-embedding-ada-002, dimensions: 1536, max token 8191
