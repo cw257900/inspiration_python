@@ -94,3 +94,5 @@ Cons:
 - **Flexibility**:  
   - Without: Switch models easily.  
   - With: Tied to Weaviate’s modules.
+
+---
