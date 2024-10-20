@@ -11,7 +11,7 @@ import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from vector_stores import vector_store as vector_store
 from embeddings import openai_embeddings as embeddings
-from utils import pdf_processor 
+from utils import pdf_processor , utils
 from configs import configs
 import datetime
 import asyncio
@@ -94,7 +94,7 @@ def upsert_chunks_to_store(pdf_file_path, vector_store, class_name):
 
     try:
         client = vector_store.client
-        docs = pdf_processor.get_checked_doc(pdf_file_path)  # Load and process the document
+        docs = pdf_processor.get_chunked_doc(pdf_file_path)  # Load and process the document
 
         print(f"1. Inserting chunks of {pdf_file_path} - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}") 
         
@@ -121,11 +121,15 @@ def upsert_chunks_to_store(pdf_file_path, vector_store, class_name):
 
             print(f"Inserted: Page {page_number} - Chunk {idx} - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
-        print(f"2. All chunks inserted for {pdf_file_path} - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
-        # Optionally, print a few inserted data objects
-        print(client.data_object.get(class_name=class_name, limit=10))
-        print(f"Doc chunks uploaded - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        """
+        @TODO: check for duplicate for update
+        """
+        counts = utils.get_class_counts(client, class_name)
+        print (f"2. Total chunks {len(docs)} inserted for {pdf_file_path}  to class {class_name}" )
+        print(f"2. Total records for class {class_name} : {counts}")
+        print ({datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')})
+
 
     except Exception as e:
         print(f"Error: {e}")
@@ -142,5 +146,5 @@ if __name__ == "__main__":
     # asyncio.run(upsert_embeddings_to_vector_store(pdf_file_path, vector_store, pdf_processor, embeddings, WEAVIATE_STORE_NAME))
 
      
-    upsert_chunks_to_store(pdf_file_path, vector_store, pdf_class_name=class_name)
+    upsert_chunks_to_store(pdf_file_path, vector_store, class_name=class_name)
        

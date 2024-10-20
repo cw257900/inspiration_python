@@ -66,20 +66,21 @@ def reflect_weaviate_client():
     del client # as there might be underline leak; and client.close() doesn't work
 
 
-def get_total_count(client, class_name):
+def get_class_counts(client, class_name):
 
     # Perform the aggregate query to get the count of objects
     result = client.query.aggregate(class_name).with_meta_count().do()
 
     # Extract the count from the response
     count = result['data']['Aggregate']['PDF_COLLECTION'][0]['meta']['count']
-    print(f"Total records in {class_name}: {count}")
-
+    
+    print(f"Total count of {class_name}: {count}")
+    return count
+    
 
 def main():
     #reflect_weaviate_client()
-
-    get_total_count(vector_store.client, class_name)
+    get_class_counts(vector_store.client, class_name)
   
    
 
