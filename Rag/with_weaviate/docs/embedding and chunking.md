@@ -15,12 +15,12 @@ Selected:
 
 Options:
 - When to Embed: Pre-embed vectors before loading to Weaviate, or let [Weaviate embed](https://weaviate.io/developers/weaviate/concepts/vector-quantization) during object creation.
-    > openai: 
+    openai: 
     > > text-embedding-3-large, dimensions: 3072
     > > text-embedding-ada-002, dimensions: 1536
     > > text-embedding-3-small,dimensions: 768
-    ![alt text](image-2.png)
-    > cohere: 
+    
+    cohere: 
     > > model: nname=multilingual-22-12, dimension=768,semgments=384, 256, 192, 96
     > huggingface: 
     > > sentence-transformers/all-MiniLM-L12-v2, dimention=384, segments=192, 128, 96
