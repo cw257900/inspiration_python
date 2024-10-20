@@ -130,14 +130,9 @@ def create_class_with_vectorizer_index_and_dims(client, class_name, class_descri
             name=class_name,
             description=class_description,
             vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_openai(
-                model=text2vec_model,
-                name="page_content",
-                source_properties="page_content"
+                model=text2vec_model
             ),    # Set the vectorizer to "text2vec-openai" to use the OpenAI API for vector-related operations
-            generative_config=wvc.config.Configure.Generative.cohere(
-                name="tiles", 
-                source="page_content"
-            ),             # Set the generative module to "generative-cohere" to use the Cohere API for RAG
+            generative_config=wvc.config.Configure.Generative.cohere () ,            # Set the generative module to "generative-cohere" to use the Cohere API for RAG
             properties=[
                 wvc.config.Property(
                     name="page_content",

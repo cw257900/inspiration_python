@@ -26,10 +26,10 @@ Where to do the Embedding:
 What models to use:
 1. openai: text2vec_openai
     - text-embedding-3-large, dimensions: 3072 
-    - text-embedding-ada-002, dimensions: 1536 
     - text-embedding-3-small,dimensions: 1536 
+    - availale model names: ada babbage curie davinci text-embedding-3-small text-embedding-3-large
 2. cohere: text2vec-cohere
-    - multilingual-22-12, dimension=768,semgments=384, 256, 192, 96 , integrated with Cohere
+    - available module name: [command-r-plus command-r command-xlarge-beta command-xlarge command-medium command-xlarge-nightly command-medium-nightly xlarge medium command command-light command-nightly command-light-nightly base base-light]
 3. huggingface: 
     - sentence-transformers/all-MiniLM-L12-v2, dimention=384, segments=192, 128, 96 ; use transformer models such as BERT, GPT
 4. Image-based Embedding: img2vec-neural
@@ -37,7 +37,7 @@ What models to use:
 
 Used in Solution: 
 ```
-    Weaviate to embed: text2vec-openai text-embedding-ada-002, dimensions: 1536, max token 8191
+    Weaviate to embed: text2vec-openai text-embedding-3-small, dimensions: 1536, max token 8191
     vectorizer_config=
             wvc.config.Configure.Vectorizer.text2vec_openai(
                 model="text-embedding-ada-002",
