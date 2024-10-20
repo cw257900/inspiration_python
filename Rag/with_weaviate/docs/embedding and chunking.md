@@ -14,9 +14,8 @@ Selected:
 ## Embedding Strategy
 
 Options:
-- **When to Embed**: Pre-embed vectors before loading to Weaviate, or let Weaviate embed during object creation.
-
-
+- **When to Embed**: Pre-embed vectors before loading to Weaviate, or let [Weaviate embed](https://weaviate.io/developers/weaviate/concepts/vector-quantization) during object creation.
+![alt text](image-1.png)
 
 Selected:
 - **Weaviate** to embed: text2vec-openai 
