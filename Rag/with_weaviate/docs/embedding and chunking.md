@@ -13,9 +13,10 @@ Selected:
 
 ## Embedding Strategy
 
-Options:
-- When to Embed: Pre-embed vectors before loading to Weaviate, or let [Weaviate embed](https://weaviate.io/developers/weaviate/concepts/vector-quantization) during object creation. <br>
-- What models to use <br>
+**Options **: 
+- Where to do the Embedding: 
+    Pre-embed vectors before loading to Weaviate, or let [Weaviate embed](https://weaviate.io/developers/weaviate/concepts/vector-quantization) during object creation. <br>
+- What model and package to use: 
     openai: 
     > text-embedding-3-large, dimensions: 3072 <br>
     > text-embedding-ada-002, dimensions: 1536 <br>
@@ -27,7 +28,7 @@ Options:
     huggingface: 
     > sentence-transformers/all-MiniLM-L12-v2, dimention=384, segments=192, 128, 96
 
-Selected:
+**Selected: **
 - Weaviate to embed: text2vec-openai text-embedding-ada-002, dimensions: 1536, max token 8191
 ```
     vectorizer_config=
