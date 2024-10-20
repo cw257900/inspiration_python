@@ -20,14 +20,14 @@ Where to do the Embedding
     2. Use [Weaviate embed](https://weaviate.io/developers/weaviate/concepts/vector-quantization) during object creation. 
 
 What models to use
-    > **openai**: <br>
-    > text-embedding-3-large, dimensions: 3072 <br>
-    > text-embedding-ada-002, dimensions: 1536 <br>
-    > text-embedding-3-small,dimensions: 1536 <br>
-    > **cohere**: <br>
-    > nname=multilingual-22-12, dimension=768,semgments=384, 256, 192, 96 <br>
-    > **huggingface**: <br>
-    > sentence-transformers/all-MiniLM-L12-v2, dimention=384, segments=192, 128, 96 <br>
+    - openai: 
+      text-embedding-3-large, dimensions: 3072 
+      text-embedding-ada-002, dimensions: 1536 
+      text-embedding-3-small,dimensions: 1536 
+    - cohere: 
+      name=multilingual-22-12, dimension=768,semgments=384, 256, 192, 96 
+    - huggingface: 
+    sentence-transformers/all-MiniLM-L12-v2, dimention=384, segments=192, 128, 96 
 
 Selected:  
 Weaviate to embed: text2vec-openai text-embedding-ada-002, dimensions: 1536, max token 8191
