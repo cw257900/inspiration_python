@@ -13,8 +13,6 @@ from configs import configs
 
 load_dotenv()
 
-# Set API keys and Weaviate URL from environment variables
-
 
 # Function to split the extracted text into chunks for better embedding
 def get_chunked_doc(pdf_file_path):
@@ -46,7 +44,7 @@ def main ():
  
     pdf_file_path =  os.getenv("LOCAL_FILE_INPUT_PATH")
     doc = get_chunked_doc(pdf_file_path)
-    print(f"1. Number of chunks from pdf: {len(doc)}")
+    print(f"001. Number of chunks from pdf: {len(doc)}")
 
 
 if __name__ == "__main__":
