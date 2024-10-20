@@ -45,9 +45,8 @@ Selected:
 ---
 ## Embedding Approach Analysis
 
-```
 
-## Pre-Embedded Vector Approach
+### Pre-Embedded Vector Approach
 
 1. Embed PDF chunks using external models (e.g., `LangChain OpenAIEmbeddings`).  
 2. Store vectors directly in Weaviate, bypassing its internal embedding module.
@@ -91,4 +90,3 @@ Selected:
 - **Flexibility**:  
   - Without: Switch models easily.  
   - With: Tied to Weaviate’s modules.
-```
