@@ -13,8 +13,6 @@ from configs import configs
 
 load_dotenv()
 
-# Set API keys and Weaviate URL from environment variables
-
 
 # Function to split the extracted text into chunks for better embedding
 def get_chunked_doc(pdf_file_path):
