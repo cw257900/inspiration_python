@@ -9,9 +9,10 @@ from weaviate.exceptions import WeaviateBaseError
 import sys
 # Add the parent directory (or wherever "with_pinecone" is located) to the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from chunking import chucking_recursiveCharacterTextSplitter
 from vector_stores import vector_store as vector_store
 from embeddings import openai_embeddings as embeddings
-from utils import pdf_processor , utils
+from utils import utils
 from configs import configs
 import datetime
 import asyncio
@@ -94,7 +95,7 @@ def upsert_chunks_to_store(pdf_file_path, vector_store, class_name):
 
     try:
         client = vector_store.client
-        docs = pdf_processor.get_chunked_doc(pdf_file_path)  # Load and process the document
+        docs = chucking_recursiveCharacterTextSplitter.get_chunked_doc(pdf_file_path)  # Load and process the document
 
         print(f"1. Inserting chunks of {pdf_file_path} - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}") 
         

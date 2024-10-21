@@ -4,10 +4,13 @@
 
 ### Options:
 - Extract Text: tools as `PyPDF2` or `pdfminer`.
-- Semantic Splitting: OpenAI GPT, Hugging Face models, or `LangChain`'s `RecursiveCharacterTextSplitter`.
+- Character Splitting: OpenAI GPT, Hugging Face models, or `LangChain`'s `RecursiveCharacterTextSplitter`.
+- Semantic Splitting: Facebook's FAISS
 
-### Selected:
+### Under Evaluation:
 - CharacterTextSplitter, RecursiveCharacterTextSplitter
+
+
 
 ---
 
