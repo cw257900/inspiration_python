@@ -6,39 +6,42 @@
 gql_hybridsearch_withLimits =  """
 {
     Get {
-        PDF_COLLECTIONS(
+        %s(
             hybrid: {
-                query: "{text}",
+                query: "%s",
                 alpha: 0.75
-            },
-            limit: {limit} 
-        ) {
-            pdf_name
-            pdf_content
-            pdf_chunk_id
+            }
+            limit: %d ), 
+        {
+            source
+            page_content
+            page_number
             _additional {
+                distance
                 score
+                explainScore
             }
         }
     }
-
 }
 """
 
 gql_hybridSearchByText = """
 {
     Get {
-        PDF_COLLECTIONS(
+        %s(
             hybrid: {
                 query: "{text}",
                 alpha: 0.75
             }
             ) {
-            pdf_name
+            pdf_number
             pdf_content
-            pdf_chunk_id
-            _additional {
+            source
+             _additional {
                 score
+                distance
+                explainScore
             }
         }
     }
@@ -49,16 +52,17 @@ gql_hybridSearchByText = """
 gql_getSingleObjectById = """
 {
     Get {
-        PDF_COLLECTIONS(where: {
+        %s(where: {
             path: ["_additional", "id"],
             operator: Equal,
             valueString: "{uuid}"
         }) {
-            pdf_name
+            pdf_number
             pdf_content
-            pdf_chunk_id
             _additional {
-                id
+                score
+                distance
+                explainScore
             }
         }
     }
@@ -68,16 +72,18 @@ gql_getSingleObjectById = """
 gql_queryObjectsByKeyword = """
 {
     Get {
-        PDF_COLLECTIONS(where: {
+        %s(where: {
             path: ["pdf_content"],
             operator: Like,
             valueString: "{keyword}"
         }) {
             pdf_name
             pdf_content
-            pdf_chunk_id
+            source
             _additional {
-                id
+                score
+                distance
+                explainScore
             }
         }
     }
@@ -87,7 +93,7 @@ gql_queryObjectsByKeyword = """
 gql_getAllObjects = """
 {
     Get {
-        PDF_COLLECTIONS {
+        %s {
             pdf_name
             pdf_content
             pdf_chunk_id

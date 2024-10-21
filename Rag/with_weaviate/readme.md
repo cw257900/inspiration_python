@@ -7,14 +7,12 @@ an app to chat with private knowledge base build from pdfs <br>
 ask question in natural English, app provides relevant reponse based on content from the documents <br>
 the app can only respond to questions related to the loaded pdfs
 
+the RAG is build with python and powered by Weaviate Vector/Graph DB so as to support quick GraphQL queries, other AI open source solutions. 
+
 [RAG Reading from Medium](https://medium.com/@florian_algo/list/2334780a5667)
 [Weaviate Quick Start](https://weaviate.io/developers/weaviate/quickstart)
 [Weaviate API Specification](https://weaviate.io/developers/weaviate/api/rest#tag/schema/GET/schema)
 
-## update requirements.txt 
-```
-pip install package_name && echo "package_name==$(pip show package_name | grep Version | awk '{print $2}')" >> requirements.txt
-```
 
 
 ## install and start weaviate db
