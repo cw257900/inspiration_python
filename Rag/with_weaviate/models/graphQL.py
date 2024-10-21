@@ -8,22 +8,21 @@ gql_hybridsearch_withLimits =  """
     Get {
         %s(
             hybrid: {
-                query: "{text}",
+                query: "%s",
                 alpha: 0.75
-            },
-            limit: {limit} 
-        ) {
-            pdf_name
-            pdf_content
+            }
+            limit: %d ), 
+        {
             source
-             _additional {
-                score
+            page_content
+            page_number
+            _additional {
                 distance
+                score
                 explainScore
             }
         }
     }
-
 }
 """
 
@@ -36,7 +35,7 @@ gql_hybridSearchByText = """
                 alpha: 0.75
             }
             ) {
-            pdf_name
+            pdf_number
             pdf_content
             source
              _additional {
@@ -58,9 +57,8 @@ gql_getSingleObjectById = """
             operator: Equal,
             valueString: "{uuid}"
         }) {
-            pdf_name
+            pdf_number
             pdf_content
-            pdf_chunk_id
             _additional {
                 score
                 distance
