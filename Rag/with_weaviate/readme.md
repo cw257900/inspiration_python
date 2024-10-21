@@ -17,6 +17,7 @@ the RAG is build with python and powered by Weaviate Vector/Graph DB so as to su
 
 ## install and start weaviate db
 ```
+Installation Instructions: https://weaviate.io/developers/weaviate/installation/docker-compose#sample-docker-compose-file
 docker-compose up -d  #start docker service as deamon 
 source .venv/bin/activate  #active the virtual environment
 
@@ -25,6 +26,9 @@ source venv/bin/activate  # On Windows, use venv\Scripts\activate
 
 pip install <package-name> --upgrade --requirement requirements.txt
 pip freeze  > requirements.txt
+
+pip install weaviate-client
+pip install 
 
 ```
 
