@@ -1,22 +1,6 @@
-# Chunking and Embedding
 
+# Embedding Strategy
 
-## Chunking Strategy
-
-Options:
-- Extract Text: tools as `PyPDF2` or `pdfminer`.
-- Semantic Splitting: OpenAI GPT, Hugging Face models, or `LangChain`'s `RecursiveCharacterTextSplitter`.
-
-Selected:
-- CharacterTextSplitter, RecursiveCharacterTextSplitter
-
----
-
-
-
-
-
-## Embedding Strategy
 #### Pre-Embedded Vector Approach
 
 Where to do the Embedding:
