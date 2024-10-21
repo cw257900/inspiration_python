@@ -30,14 +30,6 @@ pdf_file_path =  os.getenv("LOCAL_FILE_INPUT_PATH")
 class_name =configs.WEAVIATE_STORE_NAME
 
 
-def batch_insert(client, docs):
-    collection = client.collections.get(configs.WEAVIATE_STORE_NAME)
-    data_rows = []
-    with collection.batch.dynamic() as batch:
-        for i, data_row in enumerate(data_rows):
-            batch.add_object(
-                properties=data_row
-            )
 def vectordb_verify_data(client):
 
     collection_objects = client.data_object.get(class_name=class_name, limit=10)  # Adjust limit as needed
