@@ -1,16 +1,14 @@
 ## Engagements
 ------------
-https://calendly.com/chunping-bawv <br>
+Connie Wang:chunping@yahoo.com <br>
+Meet Up: https://calendly.com/chunping-bawv <br>
 
-chunping@yahoo.com
 
 ## Introduction 
 ------------
 an app to chat with private knowledge base build from pdfs <br>
 ask question in natural English, app provides relevant reponse based on content from the documents <br>
 the app can only respond to questions related to the loaded pdfs
-
-Connie Wang : chunping@yahoo.com 
 
 More detailed documentation can be found under /inspiration/rag/with_weaviate/docs/.
 

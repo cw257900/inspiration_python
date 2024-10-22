@@ -5,7 +5,7 @@ import sys
 
 # Add the parent directory (or wherever "with_pinecone" is located) to the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from vector_stores import vector_store as vector_store
+from vector_stores import vector_stores as vector_store
 from utils import utils
 
 from configs import configs
@@ -172,11 +172,10 @@ if __name__ == "__main__":
     #client = vector_store.client
     
     # Initialize the Weaviate client
-    client = weaviate.connect_to_local(
-        headers={
-            "X-OpenAI-Api-Key": OPENAI_API_KEY # Replace with your inference API key
-        }
-    )
-    
+    client = vector_store.create_client()
+    if (not client.is_connected()): 
+        print (client.is_connected)
+        client.connect()
     #create_class_with_vectorizer_and_dims(client, class_name=class_name)
     create_class_with_vectorizer_index_and_dims(client, class_name=class_name, class_description=class_description)
+    vector_store.close_client(client)

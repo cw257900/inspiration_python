@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from weaviate.classes.query import MetadataQuery
 from models import graphQL
 from configs import configs
-from vector_stores import vector_store_local as vector_store  #vector_store_local is for V4; otherwise, client.Collections will throw exception 
+from vector_stores import vector_stores as vector_store  #vector_store_local is for V4; otherwise, client.Collections will throw exception 
 from models import graphQL
 from configs import configs
 load_dotenv()
@@ -24,7 +24,7 @@ headers = {
 
 def retrieve_graphql( text_query, class_name=class_name,  limit =5):
 
-    client = vector_store.client
+    client = vector_store.create_client()
     connection = client.collections.get(class_name)
 
     query = graphQL.gql_hybridsearch_withLimits % (class_name, text_query, limit)
@@ -42,6 +42,8 @@ def retrieve_graphql( text_query, class_name=class_name,  limit =5):
         )
 
         return response
+    
+    vector_store.close_client(client)
 
 
 

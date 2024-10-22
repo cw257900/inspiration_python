@@ -9,7 +9,7 @@ import asyncio
 
 # Add the parent directory (or wherever "with_pinecone" is located) to the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-import vector_stores.vector_store_local as vector_store_local
+import vector_stores.vector_stores as vector_store
 
 import configs.configs as configs
 
@@ -50,7 +50,7 @@ def get_object_by_uuid():
 
 def get_object_by_class_name():
 
-    client = weaviate.connect_to_local()
+    client = vector_store.create_client()
 
     try:
         collection = client.collections.get("PDF_COLLECTION")
@@ -70,7 +70,7 @@ def get_object_by_class_name():
         print(f"Error querying object by UUID: {e}")
         return None
 
-    client.close()
+    vector_store.close_client(client) 
 
 def main():
     get_object_by_uuid()
