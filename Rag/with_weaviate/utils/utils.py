@@ -8,7 +8,7 @@ import inspect
 
 # Add the parent directory (or wherever "with_pinecone" is located) to the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-import vector_stores.vector_store_local as vector_store_local
+import vector_stores.vector_stores as vector_stores
 
 import configs.configs as configs
 

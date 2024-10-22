@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from weaviate.classes.query import MetadataQuery
 from models import graphQL
 from configs import configs
-from vector_stores import vector_store_local as vector_store  #vector_store_local is for V4; otherwise, client.Collections will throw exception 
+from vector_stores import vector_stores as vector_store  #vector_store_local is for V4; otherwise, client.Collections will throw exception 
 
 load_dotenv()
 
@@ -18,7 +18,7 @@ class_name =configs.WEAVIATE_STORE_NAME
 
 def query (vector_store, inquiry = None, class_name = class_name, limit = 5):
 
-    client = vector_store.client
+    client = vector_store.create_client()
     connection = client.collections.get(class_name)
 
     if inquiry is None:
