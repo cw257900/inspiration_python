@@ -1,5 +1,4 @@
 
-settings:
 
 <weaviate.Collection config={
   "name": "PDF_COLLECTION",
