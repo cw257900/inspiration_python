@@ -28,7 +28,10 @@ pip install <package-name> --upgrade --requirement requirements.txt
 pip freeze  > requirements.txt
 
 pip install weaviate-client
-pip install sentence-transformers
+pip install pillow pytesseract torch transformers
+
+python3.12 -m venv torch_env  #torch doesn't go with 3.13, but works with 3.12
+source torch_env/bin/activate
 
 ```
 
