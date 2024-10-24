@@ -2,6 +2,7 @@ import os
 import weaviate.classes as wvc
 import weaviate
 import sys
+from sentence_transformers import SentenceTransformer
 
 # Add the parent directory (or wherever "with_pinecone" is located) to the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -122,16 +123,16 @@ def create_class_with_vectorizer_index_and_dims(client, class_name, class_descri
     text-embedding-ada-002, dimensions: 1536
     text-embedding-3-small, dimensions: 1536
     """
-
+    vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_openai( model=text2vec_model)  
+    
     print ("requested to create new collection: ", class_name, " with vectorizer: ", " model: ", model)
     try:
       
         collection = client.collections.create( #this is v4 weaviate
             name=class_name,
             description=class_description,
-            vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_openai(
-                model=text2vec_model
-            ),    # Set the vectorizer to "text2vec-openai" to use the OpenAI API for vector-related operations
+             # Set the vectorizer to "text2vec-openai" to use the OpenAI API for vector-related operations
+            vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_transformers( )  ,
             generative_config=wvc.config.Configure.Generative.cohere () ,            # Set the generative module to "generative-cohere" to use the Cohere API for RAG
             properties=[
                 wvc.config.Property(

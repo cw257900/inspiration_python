@@ -28,7 +28,7 @@ pip install <package-name> --upgrade --requirement requirements.txt
 pip freeze  > requirements.txt
 
 pip install weaviate-client
-pip install 
+pip install sentence-transformers
 
 ```
 

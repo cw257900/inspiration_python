@@ -14,8 +14,32 @@ What models to use:
     - availale model names: ada babbage curie davinci text-embedding-3-small text-embedding-3-large
 2. cohere: text2vec-cohere
     - available module name: [command-r-plus command-r command-xlarge-beta command-xlarge command-medium command-xlarge-nightly command-medium-nightly xlarge medium command command-light command-nightly command-light-nightly base base-light]
-3. huggingface: 
-    - sentence-transformers/all-MiniLM-L12-v2, dimention=384, segments=192, 128, 96 ; use transformer models such as BERT, GPT
+3. huggingface: dimention=384, segments=192, 128, 96 ; use transformer models such as BERT, GPT:
+    - text2vec-transformers/all-MiniLM-L12-v2:  
+            Slightly larger version of MiniLM-L6, providing higher accuracy at the cost of performance.
+    - sentence-transformers/all-MiniLM-L6-v2: 
+            Small, efficient model for sentence embeddings.
+    - sentence-transformers/paraphrase-MiniLM-L6-v2: 
+            Optimized for paraphrase detection and similar sentence tasks.
+    - sentence-transformers/paraphrase-mpnet-base-v2: 
+            High-quality model for paraphrase detection, offering more accuracy than MiniLM models.
+    - distilbert-base-uncased
+            Distilled version of BERT, smaller and faster while retaining much of BERT’s accuracy.
+    - bert-base-uncased
+            The original BERT model, widely used for various NLP tasks.
+    - roberta-base
+            A variation of BERT, fine-tuned for robustness in various tasks.
+    - sentence-transformers/stsb-roberta-base-v2
+            RoBERTa model fine-tuned for the STS benchmark.
+    - sentence-transformers/multi-qa-MiniLM-L6-cos-v1
+            A multi-lingual model optimized for question-answering tasks.
+    - sentence-transformers/msmarco-MiniLM-L6-cos-v5
+            A model optimized for document retrieval tasks, such as in search engines.
+            
+            ........
+
+
+
 4. Image-based Embedding: img2vec-neural
     - convert images to venctor embedding using neura network models; useful in multimedia search and image-based similarity queries
 
@@ -34,51 +58,4 @@ Used in Solution:
             ),             
 ```
 
-
----
-
-## Embedding Approach Analysis
-
-
-#### Pre-Embedded Vector Approach
-
-1. Embed PDF chunks using external models (e.g., `LangChain OpenAIEmbeddings`).  
-2. Store vectors directly in Weaviate, bypassing its internal embedding module.
-
-Pros:
-- Full control over model selection and preprocessing.
-- Avoids Weaviate module costs and dependencies.
-
-Cons:
-- More complex embedding management outside Weaviate.
-
----
-
-#### With `moduleConfig` (using `text2vec-openai`)
-
-1. Weaviate handles embedding via `text2vec-openai`.
-2. Embedding happens automatically during object creation.
-3. Simplifies embedding process; direct integration with OpenAI.
-4. Dependent on external services; less control over the process.
-
----
-
-### Key Differences
-
-- **Control**:  
-  - Without `moduleConfig`: Full control over embeddings.  
-  - With `moduleConfig`: Weaviate manages embeddings.
-  
-- **Process**:  
-  - Without: You handle embeddings externally.  
-  - With: Weaviate handles everything.
-
-- **Costs**:  
-  - Without: Avoids Weaviate API costs.  
-  - With: API costs via Weaviate modules.
-
-- **Flexibility**:  
-  - Without: Switch models easily.  
-  - With: Tied to Weaviate’s modules.
-
----
+sentence token -> semantic embedding -> vector db

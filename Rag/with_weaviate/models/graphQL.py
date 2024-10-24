@@ -3,6 +3,12 @@
 # Define the GraphQL queries as static variables (Python strings)
 
 
+gql_getAllObjects = """
+X-Openai-Api-Key
+
+
+"""
+
 gql_hybridsearch_withLimits =  """
 {
     Get {
