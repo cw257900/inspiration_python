@@ -1,17 +1,20 @@
 import os
+import sys
 from typing import Dict, List, Optional
 import pytesseract
 from PIL import Image
 import weaviate
-from weaviate.classes import Properties
-from weaviate.connect import ConnectionParams
 from weaviate.collections import Collection
+from weaviate.config import ConnectionConfig
 import torch
 from transformers import AutoTokenizer, AutoModel
 from datetime import datetime
 import logging
 import hashlib
 from pathlib import Path
+# Add the parent directory (or wherever "with_pinecone" is located) to the Python path
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+from vector_stores import vector_stores 
 
 class DocumentProcessor:
     def __init__(self, batch_size: int = 100):
@@ -22,13 +25,8 @@ class DocumentProcessor:
             batch_size: Size of batches for processing documents
         """
         # Initialize Weaviate client with v4 syntax
-        self.client = weaviate.WeaviateClient(
-            connection_params=ConnectionParams.from_params(
-                http_host="localhost",
-                http_port=8080,
-                http_secure=False,
-            )
-        )
+        #self.client = weaviate.Client(connection_config=ConnectionConfig.from_url("http://localhost:8080"))
+        self.client = vector_stores.create_client()
         self.batch_size = batch_size
         
         # Initialize the tokenizer and model for embeddings
@@ -49,45 +47,40 @@ class DocumentProcessor:
         """Create the Weaviate collection for documents if it doesn't exist."""
         try:
             # Define properties for the collection
-            properties = [
-                Properties.from_dict({
-                    "name": "content",
+            properties = {
+                "content": {
                     "dataType": ["text"],
                     "description": "The OCR extracted text content"
-                }),
-                Properties.from_dict({
-                    "name": "filename",
+                },
+                "filename": {
                     "dataType": ["string"],
                     "description": "Original filename"
-                }),
-                Properties.from_dict({
-                    "name": "fileHash",
+                },
+                "fileHash": {
                     "dataType": ["string"],
                     "description": "SHA-256 hash of file content"
-                }),
-                Properties.from_dict({
-                    "name": "processingDate",
+                },
+                "processingDate": {
                     "dataType": ["date"],
                     "description": "Date when the document was processed"
-                }),
-                Properties.from_dict({
-                    "name": "pageCount",
+                },
+                "pageCount": {
                     "dataType": ["int"],
                     "description": "Number of pages in document"
-                }),
-                Properties.from_dict({
-                    "name": "metadata",
+                },
+                "metadata": {
                     "dataType": ["object"],
                     "description": "Additional metadata about the document"
-                })
-            ]
+                }
+            }
             
-            # Create collection
+            # Create collection with config
             self.client.collections.create(
-                name="OCR",
+                name="Document",
                 properties=properties,
                 vectorizer_config=None,  # We'll provide our own vectors
-                vector_config={"dimensions": 768}  # Match your embedding model dimensions
+                vector_index_config={"distance": "cosine"},
+                generative_config=None
             )
             
             self.logger.info("Created Document collection in Weaviate")
@@ -168,28 +161,24 @@ class DocumentProcessor:
         paths = list(Path(directory_path).glob(file_pattern))
         self.logger.info(f"Found {len(paths)} files to process")
         
-        # Process in batches
-        for i in range(0, len(paths), self.batch_size):
-            batch_paths = paths[i:i + self.batch_size]
-            
-            # Create batch object
-            with self.collection.batch.dynamic() as batch:
-                for path in batch_paths:
-                    try:
-                        # Process document
-                        doc, embedding = self.process_image(str(path))
-                        
-                        # Add to batch
-                        batch.add_object(
-                            properties=doc,
-                            vector=embedding
-                        )
-                        
-                        self.logger.info(f"Processed and stored document: {path.name}")
-                        
-                    except Exception as e:
-                        self.logger.error(f"Error processing {path}: {str(e)}")
-                        continue
+        # Create configuration for the batch
+        with self.collection.batch.fixed_size(batch_size=self.batch_size) as batch:
+            for path in paths:
+                try:
+                    # Process document
+                    doc, embedding = self.process_image(str(path))
+                    
+                    # Add to batch
+                    batch.add_object(
+                        properties=doc,
+                        vector=embedding
+                    )
+                    
+                    self.logger.info(f"Processed and stored document: {path.name}")
+                    
+                except Exception as e:
+                    self.logger.error(f"Error processing {path}: {str(e)}")
+                    continue
 
     def search_similar_documents(self, query_text: str, limit: int = 5) -> List[Dict]:
         """
@@ -206,7 +195,7 @@ class DocumentProcessor:
         query_embedding = self.compute_embedding(query_text)
         
         # Perform vector search using v4 syntax
-        response = (
+        results = (
             self.collection.query
             .near_vector(
                 vector=query_embedding,
@@ -217,12 +206,12 @@ class DocumentProcessor:
             .do()
         )
         
-        return response.objects
+        return results.objects
 
     def delete_all_documents(self):
         """Delete all documents from the collection."""
         try:
-            self.collection.data.delete_all()
+            self.collection.data.delete_many()
             self.logger.info("Deleted all documents from collection")
         except Exception as e:
             self.logger.error(f"Error deleting documents: {str(e)}")
@@ -234,7 +223,7 @@ if __name__ == "__main__":
     
     # Process a directory of images
     processor.batch_process_directory(
-        directory_path="./data/images/",
+        directory_path="./documents",
         file_pattern="*.png"
     )
     

@@ -29,9 +29,13 @@ pip freeze  > requirements.txt
 
 pip install weaviate-client
 pip install pillow pytesseract torch transformers
+pip install python-dotenv
+pip install sentence-transformers
 
 python3.12 -m venv torch_env  #torch doesn't go with 3.13, but works with 3.12
 source torch_env/bin/activate
+
+pip install torch #again
 
 ```
 
