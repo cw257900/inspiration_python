@@ -23,7 +23,7 @@ class_description = configs.WEAVIATE_STORE_DESCRIPTION
 
 
 
-def load_data_embed_weaviate():
+def load_data_embed_within_weaviate():
     # Initialize the Weaviate client
     client = vector_stores.create_client()
     if (not client.is_connected()): 
@@ -32,13 +32,12 @@ def load_data_embed_weaviate():
 
     class_name = 'PDF_COLLECTION'
     class_description = 'PDF Collection Weaviate embedding'
-    print('with customized embedding ', class_name)
+    print('=== rag.py with customized embedding ', class_name)
+    print()
 
     #use weaviate to embed
-    create_schema.create_collection_embed_with_weaviate(client, class_name=class_name,class_description=class_description)
-    create_data.psert_chunks_to_store(pdf_file_path, vector_store, class_name)
-        
-
+    create_schema.create_collection(client, class_name=class_name,class_description=class_description)
+    create_data.upsert_chunks_to_store(pdf_file_path, vector_store, class_name)
     vector_stores.close_client(client)
 
 def load_data_embed_outside():
@@ -55,9 +54,9 @@ def load_data_embed_outside():
 
 
     #embed outside
-    create_schema.create_collection_embed_customized(client, class_name=class_name, class_description=class_description)
+    create_schema.create_collection(client, class_name=class_name, class_description=class_description)
 
     vector_stores.close_client(client)
 
 if __name__ == "__main__":
-    load_data_embed_weaviate()
+    load_data_embed_within_weaviate()

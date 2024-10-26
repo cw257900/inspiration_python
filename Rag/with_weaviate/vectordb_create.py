@@ -1,4 +1,8 @@
 import os
+import json
+import datetime
+import asyncio
+import sys
 import traceback 
 from dotenv import load_dotenv
 from langchain.text_splitter import CharacterTextSplitter
@@ -6,19 +10,17 @@ from langchain_openai import OpenAIEmbeddings
 import weaviate
 from weaviate.classes.init import Auth
 from weaviate.exceptions import WeaviateBaseError 
-from embeddings import openai_embeddings as embeddings
-from utils import utils
-from configs import configs
-import datetime
-import asyncio
-import sys
 from weaviate.util import generate_uuid5
+
+
 # Add the parent directory (or wherever "with_pinecone" is located) to the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from chunking import chunking_recursiveCharacterTextSplitter
-from embeddings import embedding_ocr 
+from embeddings import embedding_ocr , embedding_openai as embeddings
 from vector_stores import vector_stores    as vector_store
 import vectordb_create_schema as vectordb_create_schema
+from configs import configs
+from utils import utils
 
 
 load_dotenv()
@@ -32,17 +34,12 @@ class_name =configs.WEAVIATE_STORE_NAME
 class_description =configs.WEAVIATE_STORE_DESCRIPTION
 
 
-
-
-
 # Assuming embeddings.embeddings.aembed_documents is async and we are running this in an async environment
 async def upsert_embeddings_to_vector_store(pdf_file_path, vector_store,  class_name):
     try:
+        print(f"1. Inserting chunks of {pdf_file_path} - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
         
         docs = chunking_recursiveCharacterTextSplitter.get_chunked_doc(pdf_file_path)
-
-        print(f"1. Inserting chunks of {pdf_file_path} - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-
         client = vector_store.create_client()
         collection = client.collections.get(class_name)
         
@@ -60,33 +57,23 @@ async def upsert_embeddings_to_vector_store(pdf_file_path, vector_store,  class_
                 "page_number": page_number,        # Add page number as metadata
                 "source": pdf_file_path            # Optional: add file path as metadata
             }
-
-            # Insert the object along with its vector into Weaviate
-            # client.data_object will be depercated in Nov, 2024
-            
+         
             collection.data.insert(
                 properties=data_object,
-                uuid=generate_uuid5(data_object),
+                uuid=generate_uuid5(json.dumps(data_object) + class_name),
                 vector=embedding[0]  # Use the embedding as the vector
             )
 
             print(f"Inserted: Page {page_number} - Chunk {idx} - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+            #print(embedding[0])
 
 
-        # Optionally, print a few inserted data objects
-        """
-        collection = client.collections.get (class_name)
-        for item in collection.iterator(
-            include_vector=True  # If using named vectors, you can specify ones to include e.g. ['title', 'body'], or True to include all
-        ):
-            print(item.properties)
-            print(item.vector)
-        """
+    
         print(f"Embeddings uploaded - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
     
     except Exception as e:
         print(f"Error: {e}")
-        traceback.print_exc()
+        #traceback.print_exc()
 
     finally:
        vector_store.close_client(client)
@@ -100,6 +87,7 @@ def check_collection_exists(client, collection_name: str) -> bool:
         print(f"Error checking if collection exists: {e}")
         return False
 
+# weaviate v4 code
 # Uploading chunks to Weaviate, by default ebedding
 # if same file updated already, it will throw exception : Unexpected status code: 422, 
 # with response body: {'error': [{'message': "id '8a5c4432-9a82-5f98-b9dd-5ca80b77cd13' already exists"}]}
@@ -153,12 +141,14 @@ def upsert_chunks_to_store(pdf_file_path, vector_store, class_name):
 
 # Entry point
 if __name__ == "__main__":
-    # Use asyncio.run to run the async function
-    # asyncio.run(upsert_embeddings_to_vector_store(pdf_file_path, vector_store, pdf_processor, embeddings, WEAVIATE_STORE_NAME))
     
     print(pdf_file_path)
-    #asyncio.run(upsert_embeddings_to_vector_store(pdf_file_path, vector_store=vector_store, class_name=class_name))
-    upsert_chunks_to_store(pdf_file_path, vector_store, class_name)
+    print(class_name)
+    print()
+
+    # Use asyncio.run to run the async function
+    asyncio.run(upsert_embeddings_to_vector_store(pdf_file_path, vector_store=vector_store, class_name=class_name))
+    #upsert_chunks_to_store(pdf_file_path, vector_store, class_name)
    
 
 
