@@ -36,7 +36,7 @@ pip install python-dotenv
 pip install sentence-transformers
 pip install langchain, langchain_openaid,langchain_community
 pip install pypdf
-
+pip install -U langchain-huggingface
 
 
 pip install torch #again

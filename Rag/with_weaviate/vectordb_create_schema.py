@@ -105,6 +105,7 @@ def create_collection(client, class_name, class_description=None,  dimension = 1
             description=class_description,
             # Set the vectorizer to "text2vec-openai" to use the OpenAI API for vector-related operations
             vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_openai()  ,
+            # vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_transformers( )   ,
             # Set the generative module to "generative-cohere" to use the Cohere API for RAG
             generative_config=wvc.config.Configure.Generative.cohere () ,        
             properties=[

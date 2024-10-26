@@ -22,41 +22,26 @@ class_name = configs.WEAVIATE_STORE_NAME  # WEAVIATE_STORE_NAME
 class_description = configs.WEAVIATE_STORE_DESCRIPTION
 
 
-
-def load_data_embed_within_weaviate():
-    # Initialize the Weaviate client
-    client = vector_stores.create_client()
-    if (not client.is_connected()): 
-        print (client.is_connected)
-        client.connect()
-
-    class_name = 'PDF_COLLECTION'
-    class_description = 'PDF Collection Weaviate embedding'
-    print('=== rag.py with customized embedding ', class_name)
-    print()
-
-    #use weaviate to embed
-    create_schema.create_collection(client, class_name=class_name,class_description=class_description)
-    create_data.upsert_chunks_to_store(pdf_file_path, vector_store, class_name)
-    vector_stores.close_client(client)
-
-def load_data_embed_outside():
-    
-    # Initialize the Weaviate client
-    client = vector_stores.create_client()
-    if (not client.is_connected()): 
-        print (client.is_connected)
-        client.connect()
-
-    class_name = 'PDF_COLLECTION_EMBEDDING'
-    class_description = 'PDF Collection with pre-embedding'
-    print('with customized embedding ', class_name)
+from llama_index.llms import openai
+from llama_index import VectorstoreIndex, SimpleDirectoryReader
+from IPython.display import Markdown, display 
 
 
-    #embed outside
-    create_schema.create_collection(client, class_name=class_name, class_description=class_description)
+documents = SimpleDirectoryReader('./data/images').load_data()
+index = VectorstoreIndex.from_documents(documents)
 
-    vector_stores.close_client(client)
+query_engine = index.as_query_engine()
+query = "What is the meaning of life?"
+response = query_engine.query(query)
+print(Markdown(response.response))  
 
-if __name__ == "__main__":
-    load_data_embed_within_weaviate()
+
+
+def main():
+    pass
+def __main__():
+    main()
+
+
+
+

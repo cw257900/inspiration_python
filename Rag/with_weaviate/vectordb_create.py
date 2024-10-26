@@ -11,12 +11,14 @@ import weaviate
 from weaviate.classes.init import Auth
 from weaviate.exceptions import WeaviateBaseError 
 from weaviate.util import generate_uuid5
+from langchain_huggingface import HuggingFaceEmbeddings
+
 
 
 # Add the parent directory (or wherever "with_pinecone" is located) to the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from chunking import chunking_recursiveCharacterTextSplitter
-from embeddings import embedding_ocr , embedding_openai as embeddings
+from embeddings import embedding_ocr , embedding_openai 
 from vector_stores import vector_stores    as vector_store
 import vectordb_create_schema as vectordb_create_schema
 from configs import configs
@@ -42,11 +44,22 @@ async def upsert_embeddings_to_vector_store(pdf_file_path, vector_store,  class_
         docs = chunking_recursiveCharacterTextSplitter.get_chunked_doc(pdf_file_path)
         client = vector_store.create_client()
         collection = client.collections.get(class_name)
+        embedding_huggingface =  HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
         
         # Iterate through the processed docs and insert them into Weaviate
         for idx, doc in enumerate(docs):
-            # Generate embeddings for the document page content
-            embedding = await embeddings.embeddings.aembed_documents([doc.page_content])
+            # Generate embeddings for the document page content, openai , next 1 line
+            embedding = await embedding_openai.embeddings.aembed_documents([doc.page_content])
+
+            """
+            # huggingface embedding, next 5 lines
+            # Ensure page_content is a single string, not a list
+            if isinstance(doc.page_content, list):
+                page_content = " ".join(doc.page_content)  # Join list items into a single string
+            else:
+                page_content = doc.page_content  # Already a string
+            embedding = embedding_huggingface.embed_query(page_content)  # Get the first embedding in the list
+            """
             
             # Get the page number from metadata or use idx + 1 if not available
             page_number = doc.metadata.get('page', idx + 1)
@@ -61,7 +74,8 @@ async def upsert_embeddings_to_vector_store(pdf_file_path, vector_store,  class_
             collection.data.insert(
                 properties=data_object,
                 uuid=generate_uuid5(json.dumps(data_object) + class_name),
-                vector=embedding[0]  # Use the embedding as the vector
+                vector=embedding[0]  # Use the embedding as the vector openai only
+                #vector=embedding #hugging face only 
             )
 
             print(f"Inserted: Page {page_number} - Chunk {idx} - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
