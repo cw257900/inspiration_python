@@ -4,6 +4,7 @@ import sys
 import weaviate
 from dotenv import load_dotenv
 from weaviate.exceptions import WeaviateBaseError
+import requests
 import inspect
 
 # Add the parent directory (or wherever "with_pinecone" is located) to the Python path
@@ -25,10 +26,14 @@ class_name =configs.WEAVIATE_STORE_NAME
 class_description =configs.WEAVIATE_STORE_DESCRIPTION
 
 
-def class_exists(client, class_name): #v3
-    """Check if a class already exists in the Weaviate schema."""
-    schema = client.schema.get()
-    return any(cls['class'] == class_name for cls in schema.get('classes', []))
+# Function to check if a collection (class) exists
+def check_collection_exists(client, collection_name: str) -> bool:
+    try:
+        return client.collections.exists(collection_name)
+    except Exception as e:
+        print(f"Error checking if collection exists: {e}")
+        return False
+
 
 
 # Using context management if Weaviate client supports it
@@ -66,35 +71,40 @@ def reflect_weaviate_client(vector_store):
 
     del client # as there might be underline leak; and client.close() doesn't work
 
+def get_total_object_count(client) -> int:
+    """
+    Get the total count of objects in the Weaviate instance.
 
-def get_class_counts(client, class_name): #v3 
+    Args:
+        client: Weaviate client instance (to get the base URL).
+
+    Returns:
+        int: The total count of objects, or 0 if an error occurs.
+    """
     try:
-        # Use the new GraphQL client methods for aggregation
-        query = (
-            client.graphql.aggregate(class_name)
-            .with_meta_count()  # This requests the count of objects in the class
-            .do()
-        )
+        # Construct the URL for the objects endpoint
+        url = f"{client._connection.url}/v1/objects/"
         
-        # Extract the count from the result
-        count = query['data']['Aggregate'][class_name][0]['meta']['count']
-        return count
-
-    except Exception as e:
-        print(f"Error while getting class counts: {e}")
-        raise
+        # Make the GET request to get the total object count
+        response = requests.get(url)
+        response.raise_for_status()  # Raise an error for non-200 status codes
+        
+        # Extract the total count from the JSON response
+        data = response.json()
+        total_count = data.get("totalResults", 0)
+        return total_count
     
+    except requests.exceptions.RequestException as e:
+        print(f"Error while getting total object count: {e}")
+        return 0
 
-def check_object_exists(client, object_id):#v3
-    try:
-        return client.data_object.exists(object_id)
-    except Exception as e:
-        print(f"Error while checking object existence: {e}")
-        return False
 
 def main():
-    client = weaviate.connect_to_local()
-    get_class_counts(client, "PDF_COLLECTION") 
+    client = vector_stores.create_client()
+    print ("1111", client)
+    cnt = get_total_object_count(client)
+    print ("2222 " , cnt)
+    vector_stores.close_client(client)
   
    
 

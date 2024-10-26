@@ -8,7 +8,6 @@ from sentence_transformers import SentenceTransformer
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from vector_stores import vector_stores as vector_store
 from utils import utils
-
 from configs import configs
 from dotenv import load_dotenv
 
@@ -20,6 +19,10 @@ WEAVIATE_URL = os.getenv("WEAVIATE_URL")  # WEAVIATE_URL
 class_name = configs.WEAVIATE_STORE_NAME  # WEAVIATE_STORE_NAME
 class_description = configs.WEAVIATE_STORE_DESCRIPTION
 text2vec_model=configs.text2vec_model  
+
+
+import warnings
+warnings.filterwarnings("ignore", category=ResourceWarning)
 
 
 """
@@ -61,8 +64,8 @@ def create_class(client, class_name):
         pass
     
 
-
-def create_class_with_vectorizer_and_dims(client, class_name, model="text-embedding-3-large", dimensions=1024):
+# weaviate's vector - openai's , v3 code, deprecated 
+def create_collection_embed_with_weaviate(client, class_name, class_description=None, model="text-embedding-3-large", dimensions=1024):
     """ 
     text-embedding-3-large, dimensions: 3072
     text-embedding-ada-002, dimensions: 1536
@@ -117,22 +120,33 @@ def create_class_with_vectorizer_and_dims(client, class_name, model="text-embedd
     finally:
         client.close()
 
-def create_class_with_vectorizer_index_and_dims(client, class_name, class_description, model=text2vec_model):
+
+##embeded outstide 
+def create_collection(client, class_name, class_description=None, vectorizer_config = None):
     """ 
     text-embedding-3-large, dimensions: 3072
     text-embedding-ada-002, dimensions: 1536
     text-embedding-3-small, dimensions: 1536
-    """
+
     vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_openai( model=text2vec_model)  
-    
-    print ("requested to create new collection: ", class_name, " with vectorizer: ", " model: ", model)
+    vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_transformers( ) 
+    """
+   
+    print ("requested to create new collection: ", class_name, " with vectorizer: ", " model: outside weaviate" )
+
+
+    if utils.check_collection_exists(client, class_name):
+        print(f"Collection '{class_name}' already exists.")
+        return
+
     try:
-      
         collection = client.collections.create( #this is v4 weaviate
             name=class_name,
             description=class_description,
              # Set the vectorizer to "text2vec-openai" to use the OpenAI API for vector-related operations
-            vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_transformers( )  ,
+
+            
+            vectorizer_config=vectorizer_config,
             generative_config=wvc.config.Configure.Generative.cohere () ,            # Set the generative module to "generative-cohere" to use the Cohere API for RAG
             properties=[
                 wvc.config.Property(
@@ -177,6 +191,18 @@ if __name__ == "__main__":
     if (not client.is_connected()): 
         print (client.is_connected)
         client.connect()
-    #create_class_with_vectorizer_and_dims(client, class_name=class_name)
-    create_class_with_vectorizer_index_and_dims(client, class_name=class_name, class_description=class_description)
+
+    class_name = 'PDF_COLLECTION'
+    class_description = 'PDF Collection Weaviate embedding'
+    print('with customized embedding ', class_name)
+
+    #without vector, use outside
+    #create_collection(client, class_name=class_name,class_description=class_description)
+
+    #with vector within Weaviate to embed
+    create_collection(client, class_name=class_name,class_description=class_description, 
+                      vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_transformers() )
+
+   
+
     vector_store.close_client(client)

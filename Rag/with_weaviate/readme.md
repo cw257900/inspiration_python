@@ -24,6 +24,9 @@ source .venv/bin/activate  #active the virtual environment
 python -m venv venv
 source venv/bin/activate  # On Windows, use venv\Scripts\activate
 
+python3.12 -m venv torch_env  #torch doesn't go with 3.13, but works with 3.12
+source torch_env/bin/activate
+
 pip install <package-name> --upgrade --requirement requirements.txt
 pip freeze  > requirements.txt
 
@@ -31,9 +34,10 @@ pip install weaviate-client
 pip install pillow pytesseract torch transformers
 pip install python-dotenv
 pip install sentence-transformers
+pip install langchain, langchain_openaid,langchain_community
+pip install pypdf
 
-python3.12 -m venv torch_env  #torch doesn't go with 3.13, but works with 3.12
-source torch_env/bin/activate
+
 
 pip install torch #again
 
