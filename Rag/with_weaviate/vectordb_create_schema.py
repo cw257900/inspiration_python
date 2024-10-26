@@ -8,7 +8,6 @@ from sentence_transformers import SentenceTransformer
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from vector_stores import vector_stores as vector_store
 from utils import utils
-
 from configs import configs
 from dotenv import load_dotenv
 
@@ -22,47 +21,13 @@ class_description = configs.WEAVIATE_STORE_DESCRIPTION
 text2vec_model=configs.text2vec_model  
 
 
-"""
-This function is to create schema only
-vector_create.py file upload data with customized embedding objects
-"""
-def create_class(client, class_name):
-    properties = [
-            {"name": "source", "dataType": ["string"], "indexInverted": True, "indexSearchable": True},
-            {"name": "pdf_content", "dataType": ["text"], "indexInverted": True,"indexSearchable": True},
-            {"name": "page_number", "dataType": ["int"], "indexInverted": True,"indexSearchable": True},
-    ]
-    class_schema = {
-        "class": class_name,
-        "properties": properties,
-        "description": "Collection for PDF documents with embeddings built before inserting into Weaviate"
-    }
+import warnings
+warnings.filterwarnings("ignore", category=ResourceWarning)
 
-
-    try:
-        # Get the existing schema
-        schema = client.schema.get()
-
-        # Check if the class "test" already exists
-        class_exists = any(cls['class'] == class_name for cls in schema['classes'])
-
-        if not class_exists:
-            client.schema.create_class(class_schema)
-            print("Class created successfully.")
-
-        else:
-            print("Class already exists.")
-
-    except Exception as e:
-        print(f"Error: {e}")
-
-    finally:
-        # client.close()
-        pass
     
 
-
-def create_class_with_vectorizer_and_dims(client, class_name, model="text-embedding-3-large", dimensions=1024):
+# weaviate's vector - openai's , v3 code, deprecated 
+def create_collection_embed_with_weaviate(client, class_name, class_description=None, model="text-embedding-3-large", dimensions=1024):
     """ 
     text-embedding-3-large, dimensions: 3072
     text-embedding-ada-002, dimensions: 1536
@@ -117,23 +82,32 @@ def create_class_with_vectorizer_and_dims(client, class_name, model="text-embedd
     finally:
         client.close()
 
-def create_class_with_vectorizer_index_and_dims(client, class_name, class_description, model=text2vec_model):
+
+##embeded outstide 
+def create_collection(client, class_name, class_description=None,  dimension = 1536):
     """ 
     text-embedding-3-large, dimensions: 3072
     text-embedding-ada-002, dimensions: 1536
     text-embedding-3-small, dimensions: 1536
-    """
+
     vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_openai( model=text2vec_model)  
-    
-    print ("requested to create new collection: ", class_name, " with vectorizer: ", " model: ", model)
+    vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_transformers( ) 
+    """
+   
+
+    if utils.check_collection_exists(client, class_name):
+        print(f"Collection '{class_name}' already exists.")
+        return
+
     try:
-      
         collection = client.collections.create( #this is v4 weaviate
             name=class_name,
             description=class_description,
-             # Set the vectorizer to "text2vec-openai" to use the OpenAI API for vector-related operations
-            vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_transformers( )  ,
-            generative_config=wvc.config.Configure.Generative.cohere () ,            # Set the generative module to "generative-cohere" to use the Cohere API for RAG
+            # Set the vectorizer to "text2vec-openai" to use the OpenAI API for vector-related operations
+            vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_openai()  ,
+            # vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_transformers( )   ,
+            # Set the generative module to "generative-cohere" to use the Cohere API for RAG
+            generative_config=wvc.config.Configure.Generative.cohere () ,        
             properties=[
                 wvc.config.Property(
                     name="page_content",
@@ -153,6 +127,7 @@ def create_class_with_vectorizer_index_and_dims(client, class_name, class_descri
                 distance_metric=wvc.config.VectorDistances.COSINE,
                 quantizer=wvc.config.Configure.VectorIndex.Quantizer.bq(),
             ),
+            
             # Configure the inverted index
             inverted_index_config=wvc.config.Configure.inverted_index(
                 index_null_state=True,
@@ -161,9 +136,15 @@ def create_class_with_vectorizer_index_and_dims(client, class_name, class_descri
             ),
         )
 
+        print (f" === collection: {class_name} created ")
+        print ()
+        #print(collection)
+
     finally:
         
         client.close()
+
+
 
 
    
@@ -177,6 +158,10 @@ if __name__ == "__main__":
     if (not client.is_connected()): 
         print (client.is_connected)
         client.connect()
-    #create_class_with_vectorizer_and_dims(client, class_name=class_name)
-    create_class_with_vectorizer_index_and_dims(client, class_name=class_name, class_description=class_description)
+
+
+    #without vector, use outside ; default vector = None 
+    create_collection(client, class_name=class_name,class_description=class_description)
+
+
     vector_store.close_client(client)
