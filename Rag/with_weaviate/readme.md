@@ -37,7 +37,9 @@ pip install sentence-transformers
 pip install langchain, langchain_openaid,langchain_community
 pip install pypdf
 pip install -U langchain-huggingface
-
+pip install matplotlib
+pip install matplotlib==3.5.2
+pip install pillow-avif-plugin #to process .avif images
 
 pip install torch #again
 

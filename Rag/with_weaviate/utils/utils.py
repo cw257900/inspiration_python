@@ -2,6 +2,7 @@ import weaviate
 import os
 import sys
 import weaviate
+from weaviate.classes.query import Filter
 from dotenv import load_dotenv
 from weaviate.exceptions import WeaviateBaseError
 import requests
@@ -33,8 +34,6 @@ def check_collection_exists(client, collection_name: str) -> bool:
     except Exception as e:
         print(f"Error checking if collection exists: {e}")
         return False
-
-
 
 # Using context management if Weaviate client supports it
 def reflect_weaviate_client(vector_store):
@@ -98,17 +97,36 @@ def get_total_object_count(client) -> int:
         print(f"Error while getting total object count: {e}")
         return 0
 
+# Delete all objects in the class without deleting the schema
+def delete_objects(client, class_name): 
+    # Delete all objects in the class without deleting the schema
+    result = client.collections.delete(class_name) 
+    print(result)
+
+def delete_by_uuid (client, class_name, uuid) :
+
+    collection = client.collections.get(class_name)
+    collection.data.delete_by_id(
+        uuid
+    )
+    
 
 def main():
+    print ("weaviate version:", weaviate.__version__)
+    print ("weaviate url:", WEAVIATE_URL)
+    print ("Collection ", class_name)
+
     client = vector_stores.create_client()
-    print ("1111", client)
-    cnt = get_total_object_count(client)
-    print ("2222 " , cnt)
+    collection = client.collections.get(class_name)
+
+    #delete_objects(client, class_name)
+    delete_by_uuid (client, class_name=class_name, uuid='e2a41e19-f9bf-58e6-b7fc-664d7391e621')
+
+
     vector_stores.close_client(client)
   
    
 
 if __name__ == "__main__":
-    print ("weaviate version:", weaviate.__version__)
-    print ("weaviate url:", WEAVIATE_URL)
+
     main()

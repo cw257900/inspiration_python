@@ -1,9 +1,17 @@
 import os, sys 
 import weaviate
-from vector_stores import vector_stores 
-import vectordb_create_schema as create_schema
 
-import vectordb_create as create_data
+import uuid
+import time
+import os
+import sys
+import base64
+from sentence_transformers import SentenceTransformer
+from PIL import Image
+import pytesseract
+import requests
+from pathlib import Path 
+
 
 # Add the parent directory (or wherever "with_pinecone" is located) to the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -11,8 +19,12 @@ from vector_stores import vector_stores as vector_store
 from utils import utils
 from configs import configs
 from dotenv import load_dotenv
-
 load_dotenv()
+
+
+import warnings
+warnings.filterwarnings("ignore", category=ResourceWarning)
+
 
 # Set API keys and Weaviate URL from environment variables
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
@@ -22,25 +34,22 @@ class_name = configs.WEAVIATE_STORE_NAME  # WEAVIATE_STORE_NAME
 class_description = configs.WEAVIATE_STORE_DESCRIPTION
 
 
-from llama_index.llms import openai
-from llama_index import VectorstoreIndex, SimpleDirectoryReader
-from IPython.display import Markdown, display 
 
 
-documents = SimpleDirectoryReader('./data/images').load_data()
-index = VectorstoreIndex.from_documents(documents)
+import base64
+from PIL import Image
+import pytesseract
+from pathlib import Path
 
-query_engine = index.as_query_engine()
-query = "What is the meaning of life?"
-response = query_engine.query(query)
-print(Markdown(response.response))  
+from weaviate.util import generate_uuid5
 
 
 
-def main():
-    pass
-def __main__():
-    main()
+
+
+   
+
+
 
 
 
