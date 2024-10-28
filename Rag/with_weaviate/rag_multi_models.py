@@ -20,6 +20,7 @@ import matplotlib.image as mpimg
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from vector_stores import vector_stores 
 from configs import configs
+
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -28,7 +29,6 @@ warnings.filterwarnings("ignore", category=ResourceWarning)
 
 import logging
 logging.basicConfig(level=logging.ERROR)
-
 
 
 image_path = os.getenv("LOCAL_INPUT_PATH_IMAGE")
@@ -52,11 +52,9 @@ def load_image(image_path):
     else:
         return Image.open(image_path)
 
-  
 def to_base64(path):
     with open(path, 'rb') as file:
         return base64.base64encode(file.read()).decode('utf-8')
-
 
 def load_image_matplot(image_path):
     """Loads an image from a file path."""

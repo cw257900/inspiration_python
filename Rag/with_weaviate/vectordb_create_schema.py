@@ -28,8 +28,9 @@ text2vec_model=configs.text2vec_model
 
 
 
-#vectorizer_config=None
-#multiple models
+# vectorizer_config=None
+# multiple models: text_model for prompt; image_model for images, 
+# all models need to have same dimension, otherwise, will error out 
 def create_schema_multi_model (client, class_name, class_description=None) :
 
     if utils.check_collection_exists(client, class_name):
@@ -70,7 +71,10 @@ def create_schema_multi_model (client, class_name, class_description=None) :
         
         client.close()      
 
-##embeded outstide 
+# embeded options: openai, huggingface, or none 
+# vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_openai()  ,
+# vectorizer_config=wvc.config.Configure.Vectorizer.text2vec_transformers( )   
+# generative_config specify api to vector prompts
 def create_collection(client, class_name, class_description=None,  dimension = 1536):
     """ 
     text-embedding-3-large, dimensions: 3072

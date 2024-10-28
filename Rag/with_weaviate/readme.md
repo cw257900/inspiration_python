@@ -40,6 +40,12 @@ pip install -U langchain-huggingface
 pip install matplotlib
 pip install matplotlib==3.5.2
 pip install pillow-avif-plugin #to process .avif images
+pip install llama-index-core
+pip install llama-index-readers-file
+pip install llama-index-llms-openai
+pip install llama-index-llms-replicate
+pip install llama-index-embeddings-huggingface
+pip install llama-index-embeddings-openai
 
 pip install torch #again
 
