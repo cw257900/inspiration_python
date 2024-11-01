@@ -12,7 +12,8 @@ the RAG is build with python and powered by Weaviate Vector/Graph DB so as to su
 [RAG Reading from Medium](https://medium.com/@florian_algo/list/2334780a5667)
 [Weaviate Quick Start](https://weaviate.io/developers/weaviate/quickstart)
 [Weaviate API Specification](https://weaviate.io/developers/weaviate/api/rest#tag/schema/GET/schema)
-
+[LlamaIndex](https://docs.llamaindex.ai/en/stable/getting_started/installation/)
+[LlamaIndex Git readme](https://github.com/run-llama/llama_index/blob/main/README.md)
 
 
 ## install and start weaviate db
@@ -40,12 +41,11 @@ pip install -U langchain-huggingface
 pip install matplotlib
 pip install matplotlib==3.5.2
 pip install pillow-avif-plugin #to process .avif images
-pip install llama-index-core
-pip install llama-index-readers-file
+
 pip install llama-index-llms-openai
 pip install llama-index-llms-replicate
-pip install llama-index-embeddings-huggingface
 pip install llama-index-embeddings-openai
+pip install llama-index-core llama-index-readers-file llama-index-llms-ollama llama-index-embeddings-huggingface
 
 pip install torch #again
 
@@ -87,6 +87,8 @@ The application follows these steps to provide responses to your questions:
    - Vector Embeddings: The "vectorizer": "text2vec-openai" setting is already in place, so text properties will automatically generate vector embeddings using OpenAI’s embedding model.
 
    [Weaviate Tutorials](https://weaviate.io/developers/academy/py/zero_to_mvp) 
+
+2. By default, we use the OpenAI gpt-3.5-turbo model for text generation and text-embedding-ada-002 for retrieval and embeddings. 
    
 ```
 
