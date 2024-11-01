@@ -4,7 +4,7 @@ import datetime
 import asyncio
 import sys
 import traceback 
-from dotenv import load_dotenv
+
 from langchain.text_splitter import CharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
 import weaviate
@@ -24,7 +24,7 @@ import vectordb_create_schema as vectordb_create_schema
 from configs import configs
 from utils import utils
 
-
+from dotenv import load_dotenv
 load_dotenv()
 
 # Set API keys and Weaviate URL from environment variables
@@ -93,14 +93,6 @@ async def upsert_embeddings_to_vector_store(pdf_file_path, vector_store,  class_
        vector_store.close_client(client)
 
 
-# Function to check if a collection (class) exists
-def check_collection_exists(client, collection_name: str) -> bool:
-    try:
-        return client.collections.exists(collection_name)
-    except Exception as e:
-        print(f"Error checking if collection exists: {e}")
-        return False
-
 # weaviate v4 code
 # Uploading chunks to Weaviate, by default ebedding
 # if same file updated already, it will throw exception : Unexpected status code: 422, 
@@ -152,10 +144,10 @@ def upsert_chunks_to_store(pdf_file_path, vector_store, class_name):
        # client.close() not needed , he Python client uses standard HTTP requests under the hood, which are automatically closed after the response is received. 
        vector_store.close_client(client)
 
+def upsert_multi_models (pdf_file_path, vector_store, class_name):
+    None
 
-# Entry point
-if __name__ == "__main__":
-    
+def main ():
     print(pdf_file_path)
     print(class_name)
     print()
@@ -164,6 +156,10 @@ if __name__ == "__main__":
     asyncio.run(upsert_embeddings_to_vector_store(pdf_file_path, vector_store=vector_store, class_name=class_name))
     #upsert_chunks_to_store(pdf_file_path, vector_store, class_name)
    
+
+# Entry point
+if __name__ == "__main__":
+    main()
 
 
 
