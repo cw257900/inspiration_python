@@ -18,7 +18,7 @@ from langchain_huggingface import HuggingFaceEmbeddings
 # Add the parent directory (or wherever "with_pinecone" is located) to the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from chunking import chunking_recursiveCharacterTextSplitter
-from embeddings import embedding_ocr , embedding_openai 
+from embeddings import  embedding_openai 
 from vector_stores import vector_stores    as vector_store
 import vectordb_create_schema as vectordb_create_schema
 from configs import configs
@@ -34,6 +34,7 @@ WEAVIATE_URL = os.getenv("WEAVIATE_URL")  # WEAVIATE_URL
 pdf_file_path =  os.getenv("LOCAL_FILE_INPUT_PATH")
 class_name =configs.WEAVIATE_STORE_NAME
 class_description =configs.WEAVIATE_STORE_DESCRIPTION
+os.environ["OPENAI_API_KEY"]  = OPENAI_API_KEY
 
 
 # Assuming embeddings.embeddings.aembed_documents is async and we are running this in an async environment
@@ -153,8 +154,8 @@ def main ():
     print()
 
     # Use asyncio.run to run the async function
-    asyncio.run(upsert_embeddings_to_vector_store(pdf_file_path, vector_store=vector_store, class_name=class_name))
-    #upsert_chunks_to_store(pdf_file_path, vector_store, class_name)
+    # asyncio.run(upsert_embeddings_to_vector_store(pdf_file_path, vector_store=vector_store, class_name=class_name))
+    upsert_chunks_to_store(pdf_file_path, vector_store, class_name)
    
 
 # Entry point

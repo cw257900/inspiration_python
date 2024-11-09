@@ -119,8 +119,8 @@ def main():
     client = vector_stores.create_client()
     collection = client.collections.get(class_name)
 
-    #delete_objects(client, class_name)
-    delete_by_uuid (client, class_name=class_name, uuid='e2a41e19-f9bf-58e6-b7fc-664d7391e621')
+    delete_objects(client, class_name)
+    #delete_by_uuid (client, class_name=class_name, uuid='e2a41e19-f9bf-58e6-b7fc-664d7391e621')
 
 
     vector_stores.close_client(client)

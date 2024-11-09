@@ -33,10 +33,9 @@ def create_client():
         grpc={"host": WEAVIATE_HOST, "port": WEAVIATE_GRPC_PORT, "secure": False}
     )
 
-    client = weaviate.connect_to_local(
-        headers = {"X-OpenAI-Api-Key": OPENAI_API_KEY}
 
-    )
+    client = weaviate.connect_to_local( headers = {"X-OpenAI-Api-Key": OPENAI_API_KEY})
+    #client = weaviate.connect_to_embedded( headers = {"X-OpenAI-Api-Key": OPENAI_API_KEY})
 
 
     return client

@@ -152,8 +152,8 @@ if __name__ == "__main__":
 
 
     #without vector, use outside ; default vector = None 
-    #create_collection(client, class_name=class_name,class_description=class_description)
+    create_collection(client, class_name=class_name,class_description=class_description)
 
-    create_schema_multi_model (client, class_name) 
+    #create_schema_multi_model (client, class_name) 
 
     vector_store.close_client(client)
