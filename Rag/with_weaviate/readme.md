@@ -12,17 +12,18 @@ the RAG is build with python and powered by Weaviate Vector/Graph DB so as to su
 [RAG Reading from Medium](https://medium.com/@florian_algo/list/2334780a5667)
 [Weaviate Quick Start](https://weaviate.io/developers/weaviate/quickstart)
 [Weaviate API Specification](https://weaviate.io/developers/weaviate/api/rest#tag/schema/GET/schema)
-
+[LlamaIndex](https://docs.llamaindex.ai/en/stable/getting_started/installation/)
+[LlamaIndex Git readme](https://github.com/run-llama/llama_index/blob/main/README.md)
 
 
 ## install and start weaviate db
 ```
 Installation Instructions: https://weaviate.io/developers/weaviate/installation/docker-compose#sample-docker-compose-file
 docker-compose up -d  #start docker service as deamon 
-source .venv/bin/activate  #active the virtual environment
 
-python -m venv venv
-source venv/bin/activate  # On Windows, use venv\Scripts\activate
+
+python -m venv .venv
+source .venv/bin/activate  # On Windows, use venv\Scripts\activate
 
 python3.12 -m venv torch_env  #torch doesn't go with 3.13, but works with 3.12
 source torch_env/bin/activate
@@ -34,18 +35,17 @@ pip install weaviate-client
 pip install pillow pytesseract torch transformers
 pip install python-dotenv
 pip install sentence-transformers
-pip install langchain, langchain_openaid,langchain_community
+pip install langchain langchain_openai langchain_community
 pip install pypdf
 pip install -U langchain-huggingface
 pip install matplotlib
 pip install matplotlib==3.5.2
 pip install pillow-avif-plugin #to process .avif images
-pip install llama-index-core
-pip install llama-index-readers-file
+
 pip install llama-index-llms-openai
 pip install llama-index-llms-replicate
-pip install llama-index-embeddings-huggingface
 pip install llama-index-embeddings-openai
+pip install llama-index-core llama-index-readers-file llama-index-llms-ollama llama-index-embeddings-huggingface
 
 pip install torch #again
 
@@ -87,6 +87,8 @@ The application follows these steps to provide responses to your questions:
    - Vector Embeddings: The "vectorizer": "text2vec-openai" setting is already in place, so text properties will automatically generate vector embeddings using OpenAI’s embedding model.
 
    [Weaviate Tutorials](https://weaviate.io/developers/academy/py/zero_to_mvp) 
+
+2. By default, we use the OpenAI gpt-3.5-turbo model for text generation and text-embedding-ada-002 for retrieval and embeddings. 
    
 ```
 

@@ -11,7 +11,12 @@ import requests
 from pathlib import Path 
 import llama_index
 from llama_index.core import VectorStoreIndex, SimpleDirectoryReader
- 
+from llama_index.core import VectorStoreIndex, SimpleDirectoryReader, Settings
+from llama_index.embeddings.huggingface import HuggingFaceEmbedding
+from llama_index.llms.ollama import Ollama
+
+from llama_index.core import KeywordTableIndex, SimpleDirectoryReader
+from llama_index.llms.openai import OpenAI
 
 import openai
 
@@ -31,10 +36,26 @@ warnings.filterwarnings("ignore", category=ResourceWarning)
 
 # Set API keys and Weaviate URL from environment variables
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+HF_TOKEN = os.getenv("HF_TOKEN")
+REPLICATE_API_TOKEN=os.getenv("REPLICATE_API_TOKEN")
+
+os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
+os.environ["REPLICATE_API_TOKEN"] = os.getenv("REPLICATE_API_TOKEN")
+os.environ["HF_TOKEN"] = os.getenv("HF_TOKEN")
+
+
 WEAVIATE_URL = os.getenv("WEAVIATE_URL")  # WEAVIATE_URL
 pdf_file_path = os.getenv("LOCAL_FILE_INPUT_PATH")
 class_name = configs.WEAVIATE_STORE_NAME  # WEAVIATE_STORE_NAME
 class_description = configs.WEAVIATE_STORE_DESCRIPTION
+
+import os.path
+from llama_index.core import (
+    VectorStoreIndex,
+    SimpleDirectoryReader,
+    StorageContext,
+    load_index_from_storage,
+)
 
 def load_files_from_dir ():
     print (pdf_file_path)
@@ -55,15 +76,7 @@ def load_files_from_dir ():
         print (" ***** ", docs[0].get_text())
         print ()
 
-import os.path
-from llama_index.core import (
-    VectorStoreIndex,
-    SimpleDirectoryReader,
-    StorageContext,
-    load_index_from_storage,
-)
-
-def test ():
+def load_file_to_local_storage ():
    
     documents = SimpleDirectoryReader("data").load_data()
     index = VectorStoreIndex.from_documents(documents)
@@ -87,6 +100,18 @@ def test ():
     # Either way we can now query the index
     query_engine = index.as_query_engine()
     response = query_engine.query("What did the author do growing up?")
+    print(response)
+
+
+
+# build index over data file 
+def test ():
+
+    documents = SimpleDirectoryReader("data_llama").load_data()
+    index = VectorStoreIndex.from_documents( documents) #without llm when creating index
+    query_engine = index.as_query_engine()
+    #response = query_engine.query("sumerize the insurance document")
+    response = query_engine.query("what magic of Prince is about; and Can you summarize constitution as well?")
     print(response)
 
 

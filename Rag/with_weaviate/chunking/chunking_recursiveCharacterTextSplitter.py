@@ -9,9 +9,15 @@ from langchain.text_splitter import CharacterTextSplitter,RecursiveCharacterText
 # Add the parent directory (or wherever "with_pinecone" is located) to the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from configs import configs
-
-
 load_dotenv()
+
+import logging
+
+logging.basicConfig(
+        format='%(asctime)s - %(levelname)s - %(message)s',
+        level=logging.INFO,
+        force=True
+    )
 
 def replace_newlines_in_docs(docs):
     for doc in docs:
@@ -41,12 +47,12 @@ def get_chunked_doc(pdf_file_path):
         # Replace '\n' with space in the split documents
         docs = replace_newlines_in_docs(docs)
 
-        print("chunking_recursiveCharacterTextSplitter.py: file is being chunked: ", pdf_file_path)
+        logging.info (f" === chunking_recursiveCharacterTextSplitter.py - file is being chunked:\n    {pdf_file_path} ")
         
         return docs
 
     except Exception as e:
-        print(f"Error from {pdf_file_path}: {e}")
+        logging.error(f"Error from {pdf_file_path}: {e}")
         raise
 
     finally :

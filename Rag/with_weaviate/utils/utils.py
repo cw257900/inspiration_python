@@ -11,11 +11,22 @@ import inspect
 # Add the parent directory (or wherever "with_pinecone" is located) to the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 import vector_stores.vector_stores as vector_stores
-
 import configs.configs as configs
+
+import logging
+# Configure logging for development
+logging.basicConfig(
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    level=logging.INFO,  # Changed from WARNING to INFO
+    handlers=[
+        logging.StreamHandler()  # This ensures output to console
+    ]
+)
+
 
 # Load environment variables
 load_dotenv()
+
 
 # Get environment variables
 # Set API keys and Weaviate URL from environment variables
@@ -91,17 +102,25 @@ def get_total_object_count(client) -> int:
         # Extract the total count from the JSON response
         data = response.json()
         total_count = data.get("totalResults", 0)
+
+        """
+        idx=0
+        for o in data['objects']:
+            print ("indx " , idx)
+            print ("uuid ", o.get("properties").get("uuid"))
+            print ("page_number ", o.get("properties").get("page_number"))
+            print ("page_source " , o.get("properties").get("source"))
+            idx = idx+1
+        """
+
+        logging.info (f" === utils.py - total objects: {total_count}")
         return total_count
     
     except requests.exceptions.RequestException as e:
-        print(f"Error while getting total object count: {e}")
+        logging.error(f"Error while getting total object count: {e}")
         return 0
 
-# Delete all objects in the class without deleting the schema
-def delete_objects(client, class_name): 
-    # Delete all objects in the class without deleting the schema
-    result = client.collections.delete(class_name) 
-    print(result)
+
 
 def delete_by_uuid (client, class_name, uuid) :
 
@@ -119,8 +138,8 @@ def main():
     client = vector_stores.create_client()
     collection = client.collections.get(class_name)
 
-    #delete_objects(client, class_name)
-    delete_by_uuid (client, class_name=class_name, uuid='e2a41e19-f9bf-58e6-b7fc-664d7391e621')
+    get_total_object_count(client)
+    #delete_by_uuid (client, class_name=class_name, uuid='e2a41e19-f9bf-58e6-b7fc-664d7391e621')
 
 
     vector_stores.close_client(client)
