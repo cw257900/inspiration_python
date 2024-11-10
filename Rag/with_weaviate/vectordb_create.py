@@ -14,7 +14,6 @@ from weaviate.util import generate_uuid5
 from langchain_huggingface import HuggingFaceEmbeddings
 
 
-
 # Add the parent directory (or wherever "with_pinecone" is located) to the Python path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from chunking import chunking_recursiveCharacterTextSplitter
@@ -26,6 +25,15 @@ from utils import utils
 
 from dotenv import load_dotenv
 load_dotenv()
+
+import logging
+
+logging.basicConfig(
+        format='%(asctime)s - %(levelname)s - %(message)s',
+        level=logging.INFO,
+        force=True
+    )
+
 
 # Set API keys and Weaviate URL from environment variables
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
@@ -103,42 +111,60 @@ def upsert_chunks_to_store(pdf_file_path, vector_store, class_name):
     try:
         client = vector_store.create_client()
         collection_name = client.collections.get(class_name)
-        
-        # this is sentenceBased chunker 
-        docs = chunking_recursiveCharacterTextSplitter.get_chunked_doc(pdf_file_path)
 
-        print(f"1. Inserting chunks of {pdf_file_path} - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}") 
- 
+        all_files = []
+        for dirpath, dirnames, filenames in os.walk(pdf_file_path):
+            for filename in filenames:
+               if not filename.startswith('.'):  # Exclude files that start with a dot
+                    all_files.append(os.path.join(dirpath, filename))
+
+        logging.info (f"\n *create.py -- all files \n {json.dumps(all_files, indent=2)}")
+
+        for file in all_files:
+                
+
+            # this is sentenceBased chunker 
+            docs = chunking_recursiveCharacterTextSplitter.get_chunked_doc(file)
+
+            logging.info(f" === *create.py Inserting chunks of {file} ") 
+
+            try: #if exception happens, move on to next
+
+                # Iterate through the processed docs and insert them into Weaviate
+                for idx, doc in enumerate(docs):
+                    # Generate embeddings for the document page content
+
         
-        # Iterate through the processed docs and insert them into Weaviate
-        for idx, doc in enumerate(docs):
-            # Generate embeddings for the document page content
-          
-            # Get the page number from metadata or use idx + 1 if not available
-            page_number = doc.metadata.get('page', idx + 1)
+                    # Get the page number from metadata or use idx + 1 if not available
+                    page_number = doc.metadata.get('page', idx + 1)
+                    
+                    # Create the data object with metadata
+                    data_object = {
+                        "page_content": doc.page_content,  # Add doc content as metadata
+                        "page_number": page_number,        # Add page number as metadata
+                        #"source": pdf_file_path            # Optional: add file path as metadata
+                        "source": file
+                    }
+                
+
+                    # Insert the object along with its vector into Weaviate
+                    collection_name.data.insert(
+                        properties=data_object,
+                        uuid=generate_uuid5(data_object),
+                    )
+                    
+                    logging.info (f"Inserted: Page {page_number} - Chunk {idx} for {file} ")
             
-            # Create the data object with metadata
-            data_object = {
-                "page_content": doc.page_content,  # Add doc content as metadata
-                "page_number": page_number,        # Add page number as metadata
-                "source": pdf_file_path            # Optional: add file path as metadata
-            }
-          
+            except Exception as e:
+                logging.error(f" *** *created.py - upsert_chunks_to_store {file} \n    {e}")
+                continue
 
-            # Insert the object along with its vector into Weaviate
-            collection_name.data.insert(
-                properties=data_object,
-                uuid=generate_uuid5(data_object),
-            )
-
-            print(f"Inserted: Page {page_number} - Chunk {idx} - {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-
-        print (f"{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')} - All chuncks inserted for {pdf_file_path} ")
+            logging.info (f" === *create.py - All chuncks inserted for {file} ")
 
 
     except Exception as e:
-        print(f"Error: {e}") # will error out if object already in db to avoid duplicates 
-        #traceback.print_exc()
+        logging.error(f" *** created.py -- upsert_chunks_to_store {e}") # will error out if object already in db to avoid duplicates 
+        traceback.print_exc()
         pass 
 
     finally:
